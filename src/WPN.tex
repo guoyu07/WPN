@@ -96,7 +96,8 @@
   tabsize=2,
   breaklines=true,
   showtabs=false,
-  captionpos=b
+  captionpos=b,
+  xleftmargin=.25in
 }
 
 %
@@ -241,7 +242,14 @@ morestring=[b]",
 
 
 
-
+\newcounter{examplecounter}
+\newenvironment{example}{\begin{quote}%
+    \refstepcounter{examplecounter}%
+  \textbf{Example \arabic{examplecounter}}%
+  \quad
+}{%
+\end{quote}%
+}
 
 
 
@@ -273,29 +281,20 @@ morestring=[b]",
 
 \include{introduction}
 
-
-
-\include{introduction}
-
 \include{install}
 
-\include{maintenance}
-
-\include{setup}
-
-\include{customize}
+\include{setting}
 
 \include{codex}
 
 \include{template}
 
-\include{template_tags}
-
 \include{theme}
 
-\include{standard}
+\include{plugin}
 
-\include{glossary}
+\include{standards}
+
 
 
 

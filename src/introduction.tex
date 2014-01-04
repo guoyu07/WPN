@@ -1,29 +1,174 @@
 \part{Introduction}
 
-
-\chapter{WordPress}
+\chapter{Weblog}
 
 \section{Introduction}
 
+“博客”是“网络博客”（weblog）的缩写，是指以时间为顺序记录信息并保持更新的网站。它通常是以日记形式撰写的个人主页，还包含其它网站的链接。从个人生活到政治话题都可成为博客内容，也就是说，它可以只涉及单个狭窄主题也可以包括所有主题范围。
+
+很多博客都专注于单独的主题,比如网页设计、家庭理财、体育以及手机等无线技术。还有很多是关于作者的日常生活以及自己的思考。
+
+一般来说（虽然有例外），博客包括以下内容：
+\begin{compactitem}
+\item 主要的内容区，其中文章按时间顺序排列，最新文章在最上面。通常还有文章类别。
+\item 以前日志的存档
+\item 评论区域
+\item 其它网站的链接列表，有时称作``友情链接"。
+\item 一个或者多个``feeds"， 如RSS, Atom 或RDF 文件。
+\end{compactitem}
+
+当然，不排除有些博客还包括其它功能。
+
+\section{Blog\&CMS}
+
+CMS 或者``内容管理系统" 是用来管理网站的软件。大多数博客软件都是一种CMS，它们提供创建和维护博客功能，使人们在因特网上发表日志像写文章那样简单，只要给文章一个标题，并将标题放在（一个或者多个）类别下面就可开始编写内容了。
+
+CMS程序提供的功能较为庞大复杂，但博客工具可以让你仅凭直觉就能轻松的完成操作，而它则负责处理文章显示效果及公共访问这类后台工作。换句话说，你负责撰写，而博客工具则负责帮你管理网站！
+
+WordPress致力于改善博客外观，提升博客性能，同时使它产生的HTML代码符合网络标准。它是一个高级的博客工具，提供了一套完整丰富的功能。在管理面板上，可设置显示效果及各种功能，轻松地撰写日志，然后能将它立即发表到因特网上！
+
+创建新博客确实很困难，许多人因此望而却步。也确有博客没有评论也无人访问。你想从千百万博客中脱颖而出，想让你的博客成为那几十万个真正被访问的博客之一吗？
+
+\begin{compactenum}
+\item 定期发表日志，但如果没有什么值得发表的，就不要发表。
+\item 坚持只谈论几个特别话题。
+\item 不要在首页上放满了`订阅'和`给我投票'的链接，除非有人特别喜欢你的博客，以致可以忽视这些（但它们通常只会起负面作用） 。
+\item 如果可能的话，尽量使用简明的主题。
+\item 享受写博客的乐趣吧，记得给其他博客发表评论（因为他们一般会回访）！
+\end{compactenum}
+
+\section{Posts}
+
+对任何网站来说，内容是存在的理由。
+
+零售类网站以产品的目录为特色，大学的网站包含了校园、课程和老师等信息，新闻类网站展示了最新的新闻故事。对一个个人博客来说，上面可能有一堆的意见或评论，但如果没有内容被更新，我们根本没有理由访问一个站点两次。
+
+在一个博客上，内容包括了作者写的文章（有时候也被叫做``posts"或者``entries"）。的确，有的博客有多位作者，他们分别写各自的文章。通常情况下，博客作者在一个基于网络构建的博客系统中撰写文章。一些博客系统还支持使用独立的“博客客户端”软件，它允许作者离线写文章，稍后再上传。
+
+\section{Comments}
+
+
+
+什么是交互式网站？如果网站访客能够留下关于网站或文章的评论、小贴士或感想，这不是更有趣吗？博客最令人兴奋的一点就是能在上面发表评论。
+
+大多数博客能允许访客发表评论，有的甚至能让其它博客作者在不访问博客的情况下就能留下评论，以及链接日志并向他人推荐日志，这就是``pingbacks" 或者``trackbacks"。无论何时，只要在自己的文章中引用了其它站点的文章， trackback就会通知其它bloggers，这就加强了网站之间的交流和沟通。
+
+\begin{compactenum}
+\item Trackbacks
+
+\href{http://codex.wordpress.org/Glossary#Trackback}{Trackbacks}最早是由\href{http://www.movabletype.org/}{MovableType}博客软件包的创建者——SixApart开发的。
+\begin{shaded}
+简单来说， TrackBack是在网站间互通消息的工具：是甲向乙说话的一种方法，"你可能对这个有兴趣。"甲若要向乙表达这个句子，就要向乙发送一个 TrackBack ping。
+\end{shaded}
+
+下面是一个更好的解释：
+\begin{compactitem}
+\item 甲在博客上发表一篇日志。
+\item 乙在甲的博客上评论，但也想让自己的访客看看评论内容，并让其能在自己的博客上评论。
+\item 乙在自己的博客上发表日志，同时向甲的博客发送一个trackback。
+\item 甲的博客收到了显示原始文章评论的trackback，且评论包含了乙的文章链接。
+\end{compactitem}
+
+这个方法使更多的人加入了讨论（甲和乙的读者都可以通过链接看到对方的文章），trackback有一定的真实性，因为它们来自另一个博客。不幸地是，引入的trackback并没有真正的真实性，它们的确可以伪造。
+
+多数trackbacks只将乙所说的一小部分（称作``摘要"）发送给甲，这个``内容摘要"鼓励他们点击到乙的站点阅读其余内容（可能是评论）。通常情况下，乙向甲的博客发送的trackback贴满了评论。当然，甲可以在他自己的服务器上编辑评论，但这也意味着``真实性"问题并没有真正得到解决\footnote{甲只能在他自己的服务器上改变trackback的内容，他不能编辑发送trackback的乙站点上的文章。}。
+
+SixApart已发布\href{http://www.movabletype.org/docs/mttrackback.html}{官方trackback说明}。
+
+\item Pingbacks
+
+Pingbacks的产生是为了解决trackback遗留的问题。 然而，官方的pingback文档使pingbacks听起来和trackbacks一样糟糕：
+\begin{shaded}
+例如，Yvonne在她的博客上写了一篇有趣的文章。Kathleen阅读了Yvonne的文章，做了评论并链接了Yvonne的原始文章。使用 pingback,Kathleen的博客会自动通知Yvonne，她的博客已被链接，Yvonne的博客就会将这个信息加入到她的网站。	
+\end{shaded}
+
+pingbacks和trackbacks有三个重要区别：
+
+\begin{compactitem}
+\item Pingbacks和trackbacks使用了两种完全不同的信息技术(分别是XML-RPC和HTTP POST)。
+\item Pingbacks支持自动察觉，软件能自动发现文章中的链接并自动尝试pingback这些URLs,然而使用Trackbacks时，必须手动输入 trackbacks要发送到的trackback URL.
+\item Pingbacks不发送任何内容。
+\end{compactitem}
+
+理解pingbacks的最好办法是把它看作远程评论：
+
+\begin{compactitem}
+\item 甲在他的博客上发表一篇日志。
+\item 乙在她自己的博客上发表日志并链接甲的文章。若双方都有激活的pingback，系统将自动给甲发送pingback.
+\item 甲的博客收到了pingback,然后自动来到乙的文章来确认pingback是否确实源自那里。
+\end{compactitem}
+
+显示在甲博客上的Pingback就是乙博客的日志链接。这样，文章的所有编辑都由作者来控制（trackback摘要是可由接受者编辑的）。自动确认过程引进了一定的真实性，这就使伪造pingback变得更难了。
+
+有些人觉得trackbacks较好，因为甲的读者至少可以看见乙所说的一些话，然后决定是否要阅读更多的内容（然后点击到乙的博客）。有的人则认为 pingbacks较好，因为它们在文章之间创建了一个可证实的连接。
+
+\item 核实 Pingbacks和Trackbacks
+
+经常有人批评博客中的评论缺少权威性,因为所有人都可以用他们喜欢的名字任意发表评论，但却没有核实过程来确认发表人就是页面上显示的评论人。而Trackbacks 和Pingbacks使这一状况有所改善，因为它们都可用来核实评论。
+
+\item 审核评论
+
+审核评论允许网站所有者和作者监控和管理日志评论，并有助于处理评论中的垃圾广告。可用它来审核评论，删除不受欢迎的评论，批准通过较好评论或对评论做出其它安排。
+
+\item 垃圾评论
+
+垃圾评论是指博客上发布的无用评论（或trackbacks,或pingbacks），通常与文章内容无关。它们可以包含一个或多个其它网站或域名链接。为使他们的域名在Google中获得更高的网页排名，发送垃圾广告的人把评论作为工具，那样的话，他们未来就可将域名以更高的价格出售或者在现有网站的搜索结果中获得更高的排名。
+
+发送垃圾广告的人是毫不留情的；因为这涉及到真正的钱，他们努力"工作"，甚至创建自动工具（机器人）迅速散发他们的垃圾广告。许多博客，特别是新手，常觉得网站简直被垃圾评论包围了。
+
+然而，我们对此有解决办法！因为WordPress有许多用来打击垃圾评论的工具。预先稍作努力就可以控制垃圾评论，我们当然没理由为此放弃博客。
+
+
+\end{compactenum}
+
+\chapter{WordPress}
+
+
+
+WordPress is a free and open source blogging tool and a content management system (CMS) based on PHP and MySQL, which runs on a web hosting service. Features include a plug-in architecture and a template system. WordPress is used by more than 18.9\% of the top 10 million websites as of August 2013. WordPress is the most popular blogging system in use on the Web, at more than 60 million websites.
+
 WordPress is web software you can use to create a beautiful website or blog. We like to say that WordPress is both free and priceless at the same time.
-
-WordPress是一个注重美学、易用性和网络标准的个人信息发布平台。WordPress虽为免费的开源软件，但其价值无法用金钱来衡量。
-
-
-
-
 
 WordPress started in 2003 with a single bit of code to enhance the typography of everyday writing and with fewer users than you can count on your fingers and toes. Since then it has grown to be the largest self-hosted blogging tool in the world, used on millions of sites and seen by tens of millions of people every day.
 
-The core software is built by hundreds of community volunteers, and when you're ready for more there are thousands of plugins and themes available to transform your site into almost anything you can imagine. Over 60 million people have chosen WordPress to power the place on the web they call "home"-- we'd love you to join the family.
+The core software is built by hundreds of community volunteers, and when you're ready for more there are thousands of plugins and themes available to transform your site into almost anything you can imagine. Over 60 million people have chosen WordPress to power the place on the web they call ``home"~—~we'd love you to join the family.
 
-WordPress 是一款专注于易用性、运行速度和用户体验的发布软件。 WordPress 受益于一个活跃的社区，那是开源软件的灵魂所在。
+It was first released on May 27, 2003, by its founders, Matt Mullenweg and Mike Little, as a fork of b2/cafelog. Prior to WordPress 3.0, WordPress supported one blog per installation, although multiple concurrent copies may be run from different directories if configured to use separate database tables. WordPress Multi-User (WordPress MU, or WPMU) was a fork of WordPress created to allow multiple blogs to exist within one installation but is able to be administered by a centralized maintainer. 
+
+WordPress MU makes it possible for those with websites to host their own blogging communities, as well as control and moderate all the blogs from a single dashboard. WordPress MU adds eight new data tables for each blog.
+As of the release of WordPress 3.0, WordPress MU has merged with WordPress.
+
+As of November 26, 2013, version 3.7 had been downloaded nearly 10 million times.
 
 
+
+
+
+WordPress\cite{wp_wiki}是一个以PHP和MySQL为平台的自由开源的博客软件和内容管理系统，而且WordPress具有插件架构和模板系统。
+
+Alexa排行“前100万”的网站中有超过16.7\%的网站使用WordPress。到了2011年8月，约22\%的新网站采用了WordPress。WordPress是目前因特网上最流行的博客系统。
+
+现在，WordPress是一个注重美学、易用性和网络标准的个人信息发布平台。WordPress专注于易用性、运行速度和用户体验，它受益于一个活跃的社区，那是开源软件的灵魂所在。WordPress虽为免费的开源软件，但其价值无法用金钱来衡量。
+
+使用WordPress可以搭建功能强大的网络信息发布平台，但更多的是应用于个性化的博客。针对博客的应用，WordPress能让用户省却对后台技术的担心，集中精力做好网站的内容。
 
 \begin{shaded}
-“WordPress 的目的是为了创建一个优雅的，良好构架的基于 PHP 和 MySQL 以及 GPL 许可协议下的个人发布系统。它是b2/cafelog博客平台的正式继承者。WordPress 是新鲜的软件，但是它的根源和开发可以追溯到2001年。它是一款成熟而且稳定的产品。我们希望能把精力放在Web标准和用户体验上从而创造出一个与众不同的工具。”
+\noindent “WordPress 的目的是为了创建一个优雅的，良好构架的基于 PHP 和 MySQL 以及 GPL 许可协议下的个人发布系统。它是b2/cafelog博客平台的正式继承者。WordPress 是新鲜的软件，但是它的根源和开发可以追溯到2001年。它是一款成熟而且稳定的产品。我们希望能把精力放在Web标准和用户体验上从而创造出一个与众不同的工具。”
 \end{shaded}
+
+2003年5月27日，WordPress从b2/cafelog分支，由马特·查尔斯·穆伦维格（Matt Mullenweg）和Mike Little开发。在WordPress 3.0之前，尽管多个在不同目录中的WordPress程序能被配置成使用不同的数据库，但此时程序仅支持一次部署创建一个博客。
+
+WordPress Multi-User（WordPress MU，或简称WPMU）从WordPress中分支，支持一次部署并创建多个博客，还能够被管理员统一管理。WordPress MU成功的使一个网站能够创建自己的博客社区，同时在一个控制面板中控制修改所有的博客。WordPress MU为每个博客创建了八个新数据表。
+
+此后，WordPress MU合并到WordPress 3.0中。到了2011年12月，3.0版本已经被下载了超过6500万次。
+
+现在，WordPress在WebOS、Android、iOS（iPhone、iPod Touch、iPad）、Windows Phone和BlackBerry上都有原生应用，支持WordPress管理面板中的功能并且能够管理WordPress.com上的博客和用WordPress创建的博客。
+
+
+
+
+
+
 
 Besides the technical terminology of WordPress, it is also interesting to know the history of the name, WordPress. The name "WordPress" was originally coined by Christine Selleck in response to developer Matthew Mullenweg's desire to associate his new software project with printing presses. In this sense, press refers to the world of reporters, journalists, columnists, and photographers. An aptly chosen name, because WordPress serves as the printing press that enables its users to publish their words.
 
@@ -31,9 +176,7 @@ Everything you see here, from the documentation to the code itself, was created 
 
 WordPress started as just a blogging system, but has evolved to be used as full content management system and so much more through the thousands of \href{http://wordpress.org/plugins/}{plugins and widgets} and \href{http://wordpress.org/themes/}{themes}, WordPress is limited only by your imagination. (And tech chops.)
 
-使用WordPress可以搭建功能强大的网络信息发布平台，但更多的是应用于个性化的博客。针对博客的应用，WordPress能让您省却对后台技术的担心，集中精力做好网站的内容。
 
-Ready to get started\footnote{WordPress is also available in 中文（简体）.}? 
 
 The latest and greatest WordPress, version 3.6, is now live to the world and includes a beautiful new blog-centric theme, bullet-proof autosave and post locking, a revamped revision browser, native support for audio and video embeds, and improved integrations with Spotify, Rdio, and SoundCloud. 
 
@@ -48,21 +191,144 @@ In addition to online resources like \href{http://wordpress.org/support/}{the fo
 
 The following is a list of some of the features that come standard with WordPress, however there are literally tens of thousands of plugins that extend what WordPress does, so the actual functionality is nearly limitless. You are also free to do whatever you like with the WordPress code, extend it or modify in any way or use it for commercial projects without any licensing fees. That is the beauty of free software, free meaning not only price but also the freedom to have complete control over it.
 
-\subsection{Proven}
+
+WordPress has a web template system using a template processor, and WordPress also features integrated link management; a search engine–friendly, clean permalink structure; the ability to assign nested, multiple categories to articles; and support for tagging of posts and articles. Automatic filters are also included, providing standardized formatting and styling of text in articles (for example, converting regular quotes to smart quotes). WordPress also supports the Trackback and Pingback standards for displaying links to other sites that have themselves linked to a post or article.
+
+WordPress具有一个带模板处理器（template processor）的页面模板系统（web template system），WordPress的特性包括：
+
+\begin{compactitem}
+\item 集成了统一的超级链接管理功能；
+\item 为搜索引擎而优化的永久链接（PermaLink）系统；
+\item 对于文章可以进行嵌套的分类，同一文章也可属于多个分类；
+\item 支持使用标签（Tags）；
+\item 能产生适当的文字的格式和样式的排版滤镜；
+\item Trackback和Pingback的功能，使其他网站能够链接到文章；
+\item 所见即所得的文章编辑器；
+\item 生成和使用静态页面的功能；
+\item 可以保存访问过你的网站的用户列表；
+\item 可以禁止来自一定IP段的用户的访问；
+\item 支持自定义固定链接，对搜索引擎更友善。
+\end{compactitem}
+
+
+
+
+\section{Proven}
 
 WordPress powers nearly a quarter of new sites today, is the content management system (CMS) of choice for more than two thirds of the top million sites making it the most popular on the web, and is trusted by content publishers both large and small including CNN and the NY Times. With more than 50 million sites globally and eight years of proven history, you know you’re getting the best software for the job.
 
-\subsection{Easy to use}
+WordPress has a web template system using a template processor.
+
+
+
+\section{Easy to use}
+
+
 
 At the core of WordPress is a dumb-simple interface similar to the desktop publishing software you use today. With no coding experience or expert knowledge necessary, the learning curve is often about as short as typing in your site’s URL and logging in. In fact, most users are able to pick up the basics without any training at all. Interfaces are polished and easy to use, and are the result of years of refinement. It’s the power of Microsoft Word with the intuitiveness of an iPhone.
 
-\subsection{Built for Publishing}
+Native applications exist for WebOS, Android, iOS (iPhone, iPod Touch, iPad), Windows Phone, and BlackBerry. These applications, designed by Automattic allow a limited set of options, which include adding new blog posts and pages, commenting, moderating comments, replying to comments in addition to the ability to view the stats.
+
+
+
+\section{Built for Publishing}
 
 WordPress makes sharing content and attracting readers to your site a breeze. Whether pushing content to social networks, ensuring that your website is provided in the optimal format to appear at the top of search results the moment you hit publish, or providing visitors the ability to subscribe to specific content sub-feeds in their favorite feed reader (or even via e-mail), WordPress is not simply a website, but rather a content-publishing platform. With a single click, you have a powerful megaphone to broadcast your message to the world.
 
-\subsection{Backed by Community Support}
+\section{Community Support}
 
 WordPress is supported by a vibrant community of users who have already solved many of the toughest challenges to sharing information today. The latest version of WordPress has been downloaded more than 10 million times since it was released a few months ago, and the prior version was downloaded more than 6,072,599 times. With a library of more than 20,000 free, open-source plug-ins and themes growing each day, and hundreds of core contributors each release cycle, the WordPress community is an ecosystem built around the platform’s viability and proven success.
+
+
+From \url{wordpress.org} you can download and install a software script called WordPress. To do this you need a web host who meets the \href{http://wordpress.org/about/requirements/}{minimum requirements} and a little time. WordPress is completely customizable and can be used for almost anything. There is also a service called \href{http://wordpress.com/?ref=wporg-about}{WordPress.com} which lets you get started with a new and free WordPress-based blog in seconds, but varies in several ways and is less flexible than the WordPress you download and install yourself.
+
+WordPress was born out of a desire for an elegant, well-architectured personal publishing system built on \href{http://php.net/}{PHP} and \href{http://mysql.com/}{MySQL} and licensed under the \href{http://www.gnu.org/copyleft/gpl.html}{GPLv2} (or later). It is the official successor of b2/cafelog. WordPress is fresh software, but its roots and development go back to 2001. It is a mature and stable product. We hope by focusing on user experience and \href{http://webstandards.org/}{web standards} we can create a tool different from anything else out there.
+
+The license under which the WordPress software is released is the GPLv2 (or later) from the \href{http://www.fsf.org/}{Free Software Foundation}. A copy of the license is included with every copy of WordPress, but you can also read \href{http://wordpress.org/about/gpl/}{the text of the license} here.
+
+Part of this license outlines requirements for derivative works, such as plugins or themes. Derivatives of WordPress code inherit the GPL license. \href{http://drupal.org/}{Drupal}, which has the same GPL license as WordPress, has an excellent page on \href{http://drupal.org/licensing/faq/}{licensing as it applies to themes and modules}(their word for plugins).
+
+There is some legal grey area regarding what is considered a derivative work, but we feel strongly that plugins and themes are derivative work and thus inherit the GPL license. If you disagree, you might want to consider a non-GPL platform such as \href{http://www.s9y.org/}{Serendipity} (BSD license) or \href{http://habariproject.org/en/}{Habari} (Apache license) instead.
+
+We've got a variety of resources to help you get the most out of WordPress. Your first stop should be our \href{http://codex.wordpress.org/}{documentation}, where you'll find information on everything from installing WordPress for the first time to creating your own themes and plugins.
+
+For a bit more about WordPress' history \href{http://en.wikipedia.org/wiki/WordPress}{check out the WordPress Wikipedia page} or \href{http://codex.wordpress.org/History}{this page on our own Codex}.
+
+\subsection{Key developers}
+
+Matt Mullenweg and Mike Little were cofounders of the project. The core contributing developers include Ryan Boren, Mark Jaquith, Matt Mullenweg, Andrew Ozz, Peter Westwood and Andrew Nacin.
+
+WordPress is also developed by its community, including WP testers, a group of volunteers who test each release. They have early access to nightly builds, beta versions and release candidates. Errors are documented in a special mailing list, or the project's Trac tool.
+
+Though largely developed by the community surrounding it, WordPress is closely associated with Automattic, the company founded by Matt Mullenweg. On September 9, 2010, Automattic handed the WordPress trademark to the newly created WordPress Foundation, which is an umbrella organization supporting WordPress.org (including the software and archives for plugins and themes), \href{http://en.wikipedia.org/wiki/BbPress}{bbPress} and \href{http://en.wikipedia.org/wiki/BuddyPress}{BuddyPress}.
+
+As a free and open source platform, WordPress relies on peer support. Its primary support website is WordPress.org.
+
+
+Matthew Mullenweg和Mike Little是这个项目的共同创办人。WordPress的主要的开发者是Ryan Boren、Matthew Mullenweg、Mark Jaquith、Andrew Ozz、Peter Westwood和Andrew Nacin。
+
+WordPress也由社区开发，他们中包括了测试者。测试者测试每日版本、测试版本及发布候选版本，并将发现的错误和问题提交到特殊的邮件列表，或是提交到WordPress项目的Trac平台上。
+
+作为自由及开放源代码软件平台，WordPress依赖于互助，主要的支持站点是WordPress.org。
+
+虽然WordPress有很大一部分是由它的爱好者团体所开发和维护的，但WordPress也与Automattic公司公司有着密切的联系。Automattic由Matt Mullenweg创立。2010年9月9日，Automattic将WordPress商标赠送给新建的WordPress基金会。WordPress基金会是一个支持WordPress.org及其上的软件、插件和商标及bbPress和BuddyPress的联盟组织。
+
+\subsection{WordCamp}
+
+"WordCamp" is the name given to all WordPress-related gatherings, both informal unconferences and more formal conferences. The first such event was WordCamp 2006 in August 2006 in San Francisco, which lasted one day and had over 500 attendees. The first WordCamp outside San Francisco was held in Beijing in September 2007. Since then, there have been over 150 WordCamps around the world, for an average of nearly one a week. WordCamp San Francisco, an annual event, remains the official annual conference of WordPress developers and users.
+
+
+
+“WordCamp”指的是所有与WordPress相关的集合，包括非会议和正式会议。
+
+WordCamp 2006是召开的第一次会议，举办于2006年8月的旧金山，持续了几乎一天并有超过500人出席。
+
+第一次在旧金山外召开的WordCamp在2007年9月的北京举办。从那时起，有超过150个WordCamps组织遍布全球，开展活动的时间接近一星期。
+
+WordCamp San Francisco，是一个年度的时间，仍旧是官方WordCamp爱好者及开发人员大会
+
+
+
+\chapter{Histroy}
+
+b2/cafelog, more commonly known as simply b2 or cafelog, was the precursor to WordPress. b2/cafelog was estimated to have been employed on approximately 2,000 blogs as of May 2003. It was written in PHP for use with MySQL by Michel Valdrighi, who is now a contributing developer to WordPress. Although WordPress is the official successor, another project, b2evolution, is also in active development.
+
+WordPress first appeared in 2003 as a joint effort between Matt Mullenweg and Mike Little to create a fork of b2. Christine Selleck Tremoulet, a friend of Mullenweg, suggested the name WordPress.
+
+In 2004 the licensing terms for the competing Movable Type package were changed by Six Apart and many of its most influential users migrated to WordPress.
+
+By October 2009 the 2009 Open Source content management system Market Share Report reached the conclusion that WordPress enjoyed the greatest brand strength of any open-source content-management systems.
+
+Main releases of WordPress are codenamed after well-known jazz musicians, starting after version 1.0.
+
+
+“b2/cafelog”（通常称作“b2”或“cafelod”）是WordPress的前身。直至2003年5月，大约有2,000个博客在使用它。它的作者是WordPress的开发者之一Michel Valdrighi。 b2/cafelog基于PHP语言和MySQL数据库。尽管WordPress相当成功，但是另一个项目b2evolution也在活跃的开发中。
+
+WordPress的首次出现就是来自于Matt Mullenweg和Mike Little合力创作的一个b2/cafelog的分支版本。“WordPress”这个名字出自Christine Selleck的主意，他是主要开发者Matt Mullenweg的朋友。
+
+2004年由于竞争对手Movable Type的公司Six Apart修改了软件许可证条款，很多用户迁移到WordPress，使得它越来越受到大众的欢迎。
+
+2008年4月，WordPress与内容搜索引擎Sphere合作，优先在WordPress用户文章底部推送WordPress的内容。
+
+到了2009年10月，开源内容管理系统市场占用率报告指出WordPress在开源内容管理系统中最为有名。
+
+WordPress自1.0版之后使用著名的爵士音乐家的名字命名。举例来说，WordPress 1.2的代号为Mingus（咆勃爵士乐中贝斯手Charles Mingus的姓）。
+
+WordPress 3.0版发布之后，开发团队采用了固定的开发周期以培养改进WordPress社区。WordPress 3.1随后发布于2011年2月。2011年7月4日发布了WordPress 3.2，并提高了最低支持的PHP和MySQL版本。
+
+
+
+\chapter{Features}
+
+WordPress powers more than 17\% of the web - a figure that rises every day. Everything from simple websites, to blogs, to complex portals and enterprise websites, and even applications, are built with WordPress\cite{wp_features}.
+
+WordPress combines simplicity for users and publishers with under-the-hood complexity for developers. This makes it flexible while still being easy-to-use.
+
+The following is a list of some of the features that come as standard with WordPress, however there are literally thousands of plugins that extend what WordPress does, so the actual functionality is nearly limitless. You are also free to do whatever you like with the WordPress code, extend it or modify in any way or use it for commercial projects without any licensing fees. That is the beauty of free software, free refers not only to price but also the freedom to have complete control over it.
+
+Here are some of the features that we think that you'll love.
+
+
 
 \section{Content is King}
 
@@ -203,8 +469,20 @@ The WordPress team has gone to great lengths to ensure every bit of WordPress ge
 
 \subsection{More than a Blog}
  
-Anyone who says WordPress is a mere blogging platform is covering for the fact that they haven’t been following the CMS’s explosive growth over the past couple years. Saying WordPress is only a blogging platform is like saying BMW is only a propeller manufacturer. In fact, the majority of the time, WordPress isn’t even used as a blog. With built in support for custom post types and custom taxonomies, if you can dream it, WordPress can make it a reality.
+Anyone who says WordPress is a mere blogging platform is covering for the fact that they haven't been following the CMS's explosive growth over the past couple years. Saying WordPress is only a blogging platform is like saying BMW is only a propeller manufacturer. In fact, the majority of the time, WordPress isn't even used as a blog. With built in support for custom post types and custom taxonomies, if you can dream it, WordPress can make it a reality.
 
+Prior to WordPress 3.0, WordPress supported one blog per installation, although multiple concurrent copies may be run from different directories if configured to use separate database tables. WordPress Multi-User (WordPress MU, or WPMU) was a fork of WordPress created to allow multiple blogs to exist within one installation but is able to be administered by a centralized maintainer. WordPress MU makes it possible for those with websites to host their own blogging communities, as well as control and moderate all the blogs from a single dashboard. WordPress MU adds eight new data tables for each blog.
+
+As of the release of WordPress 3.0, WordPress MU has merged with WordPress.
+
+
+在WordPress 3.0之前，尽管多个在不同目录中的WordPress程序能被配置成使用不同的数据库，但此时程序仅支持一次部署创建一个博客。
+
+WordPress Multi-User（WordPress MU，或简称WPMU）从WordPress中分支，支持一次部署并创建多个博客，还能够被管理员统一管理。
+
+WordPress MU成功的使一个网站能够创建自己的博客社区，同时在一个控制面板中控制修改所有的博客。WordPress MU为每个博客创建了八个新数据表。
+
+此后，WordPress MU合并到WordPress 3.0中。
 
 \section{Broadcast Your Ideas}
 
@@ -218,6 +496,8 @@ The RSS 1.0 (aka RDF), RSS 2.0 and ATOM specifications are fully supported by Wo
 In an increasingly connected world, WordPress comes ready for PingBack and TrackBack, two very useful ways of connecting to other sites, and to enable them to do the same. Plus, WordPress supports pinging Ping-O-Matic, which means maximum exposure for your site to search engines.
 
 \section{Grow Your Community}
+
+
 
 \subsection{Community Building}
  
@@ -287,78 +567,123 @@ WordPress's development is guided by a set of unwavering principles. They are:
 \end{compactitem}
 
 
-\section{WordPress Terms}
+\chapter{Terms}
 
 除了要了解博客软件WordPress是怎样运行的，还需要知道一些术语和概念。
 
-\begin{compactitem}
-\item 归档
+\section{Templates}
 
-博客也是在网上保存文章的好途径。多数博客以时间为基础将文章存档（例如以月或年归档），你还可设置在首页日历上显示每日存档。日志存档还可以以类别为基础，将同一类别日志存档在一起。
+
+Template（模板）其实就是一个代码集，主题中很多地方会用到这个代码集，所以把它们整合成一个模板，这样就就不必一遍遍输入这些重复代码。
+
+Template file（模板文件）指的是包含一个或者多个代码集（模板）文件。每个主题是由多个模板文件组成的，比如：index.php，style.css，sidebar.php 等等。
+
+\section{Themes}
+
+简单来说，Theme（主题）或者 WordPress theme（WordPress 主题）指的是所有正在使用的文件，包括文本、图像、代码等。
+
+WordPress theme（主题）和 WordPress template(s)（模板）是两个不同的东西，尽管有些人认为他们一样。
+
+
+\section{Posts}
+
+
+Post（日志）指的是一篇文章。此外，它是WordPress的一个简单的条目，比如：一个页面或者一篇日记。
+
+\section{Pages}
+
+Page（静态页面）是一种特殊的 post，它不是以分类组织的，Page有别于其他的Post。
+
+在WordPress中，page（页面）和 Page（静态页面）是两种不同的东西。
+
+
+
+
+
+\section{Archives}
+
+博客也是在网上保存文章的好途径。多数博客以时间为基础将文章存档（例如以月或年归档），也可以设置在首页日历上显示每日存档。日志存档还可以以类别为基础，将同一类别日志存档在一起。
 
 除此之外，也可用作者或字母表顺序给文章存档。存档方法多种多样。能这么悠闲轻松的组织和显示日志，正是博客成为流行的个人出版工具的原因之一。
 
-\item Feeds
+\section{Feeds}
 
-Feed是一种特殊的软件工具，它允许"Feed阅读器" 自动访问网站，查看最新内容，然后向其它网站发送更新资料。这使用户能够及时了解不同网站上发表的最新和最热门的信息。Feeds包括RSS(称为"丰富的站点摘要" 或者 "聚合内容")，Atom或RDF文件。Dave Shea,网络设计博客\href{http://mezzoblue.com/}{Mezzoblue}的作者对feed作过\href{http://www.mezzoblue.com/archives/2004/05/19/what_is_rssx/}{全面总结}。
+Feed是一种特殊的软件工具，它允许``Feed阅读器" 自动访问网站，查看最新内容，然后向其它网站发送更新资料。这使用户能够及时了解不同网站上发表的最新和最热门的信息。Feeds包括RSS(称为"丰富的站点摘要" 或者 "聚合内容")，Atom或RDF文件。Dave Shea,网络设计博客\href{http://mezzoblue.com/}{Mezzoblue}的作者对feed作过\href{http://www.mezzoblue.com/archives/2004/05/19/what_is_rssx/}{全面总结}。
 
-\item 博客链接
+feed 是机器可读的 (通常是XML)博客定期更新内容，许多网络博客都有feed (通常是 RSS, 但也可能是Atom 和RDF等等, 就像上面所描述的)。
 
-博客链接是一个链接列表（可作分类），用来链接博客作者认为有价值或有趣的网页。链接的博客通常具有相同爱好。博客链接通常位于网页的"侧边栏"，或独占一个页面。\href{http://blogrolling.com/}{BlogRolling}和\href{http://blo.gs/}{blo.gs}是提供与博客链接有关的功能和帮助的两个网站，它们帮助用户轻松维护链接并使其与博客融为一体。此外，WordPress也有内置的\href{http://codex.wordpress.org/Links_Manager}{链接管理}，这样用户就不需要依赖第三方来创建和管理博客链接了。
+``feed阅读器"会不停地检测指定博客以了解其是否更新。如果博客已更新，它就会显示新日志的摘录（或者全部内容），并给其加上链接。Feed中也包括以前的日志，但当feed阅读器检查feed时，它真正要找的是新日志且它会自动发现新日志并下载下来供你阅读。这样只要把feed 链接添加到feed阅读器里，当博客新增文章时，Feed阅读器就会通知你，而你无需访问所有感兴趣的博客来看有无更新内容了。
 
-\item 聚合内容
+\section{Blogroll}
 
-feed 是机器可读的 (通常是XML)博客定期更新内容。许多网络博客有feed (通常是 RSS, 但也可能是Atom 和RDF等等, 就像上面所描述的)。"feed阅读器"会不停地检测指定博客以了解其是否更新。如果博客已更新，它就会显示新日志的摘录（或者全部内容），并给其加上链接。Feed中也包括以前的日志，但当feed阅读器检查feed时，它真正要找的是新日志且它会自动发现新日志并下载下来供你阅读。这样只要把feed 链接添加到feed阅读器里，当博客新增文章时，Feed阅读器就会通知你，而你无需访问所有感兴趣的博客来看有无更新内容了。
+博客链接是一个链接列表（可作分类），用来链接博客作者认为有价值或有趣的网页。链接的博客通常具有相同爱好。博客链接通常位于网页的"侧边栏"，或独占一个页面。\href{http://blogrolling.com/}{BlogRolling}和\href{http://blo.gs/}{blo.gs}是提供与博客链接有关的功能和帮助的两个网站，它们帮助用户轻松维护链接并使其与博客融为一体。
 
-\item 管理评论
+此外，WordPress也有内置的\href{http://codex.wordpress.org/Links_Manager}{链接管理}，这样用户就不需要依赖第三方来创建和管理博客链接了。
+
+
+
+
+
+\section{Comments}
 
 博客中最令人兴奋的特征之一就是评论。这个高度交互式的功能允许用户评论日志，链接日志并向他人推荐日志——这就是trackbacks和pingbacks。我们也将讨论怎样审核和管理评论，及怎样处理博客中恼人的垃圾评论。
 
-\item 固定链接
+\section{Permalinks}
+
 
 固定链接是个人博客的日志，分类和其它记录内容的永久URLs.其它博客作者浏览你的日志（或其它博客版块）时，你在邮件中输入日志链接时都会用到Permalink。由于他人也许会链接你的日志，所以日志的URL应保持不变，而固定链接正是永久性的（长时间有效）。
 
-“漂亮的”固定链接源于这样一个理念：由于人们点击链接时，它的 URL 就会显示，因此我们希望显示的 URL 是有意义的，而不是充满了难以理解的参量。最好的固定链接应是“可修改的”，即用户可以更改浏览器中的文章链接，使其导航到博客的其它版块或列表。例如，以下是 WordPress 默认的固定链接： /index.php?p=423
+“漂亮的”固定链接源于这样一个理念：由于人们点击链接时，它的 URL 就会显示，因此我们希望显示的 URL 是有意义的，而不是充满了难以理解的参量。最好的固定链接应是“可修改的”，即用户可以更改浏览器中的文章链接，使其导航到博客的其它版块或列表。例如，以下是 WordPress 默认的固定链接： \textcolor{Blue}{/index.php?p=42}
 
-用户怎会知道“p”代表什么？数字 423 来自哪儿呢？
+用户怎会知道“p”代表什么？数字 42 来自哪儿呢？
 
-相反，如果配置 WordPress，更改固定链接的话，拥有合理结构的漂亮的固定链接，链接就会链接到同一篇文章： /archives/2003/05/23/my-cheese-sandwich/
+相反，如果配置 WordPress，更改固定链接的话，拥有合理结构的漂亮的固定链接，链接就会链接到同一篇文章： \textcolor{Blue}{/archives/2003/05/23/my-cheese-sandwich/}
 
-只要看一眼 URL，就能轻易看出链接包含了发表日志的日期和标题。或许有人也能想到把 URL改为/archives/2003/05/，就会得到 2003 年 5 月的所有日志列表。相当漂亮。
+只要看一眼 URL，就能轻易看出链接包含了发表日志的日期和标题。或许有人也能想到把 URL改为/archives/2003/05/，就会得到 2003 年 5 月的所有日志列表。
 
-\item 使用电子邮件撰写博客
+\section{Email}
 
-一些博客工具允许通过邮件把日志直接发送到博客上，而无需使用博客工具。WordPress就提供了这个较酷的功能。使用电子邮件，现在就可以将你的日志内容发送到预设的邮箱中。
+一些博客工具允许通过邮件把日志直接发送到博客上，而无需使用博客工具。WordPress就提供了这个较酷的功能。现在使用电子邮件就可以将你的日志内容发送到预设的邮箱中。
 
-\item 日志缩略名
+\section{Thumbnails}
+
 
 如果使用了Permalinks, 日志缩略名（通常是日志标题）就是你的日志链接。博客软件可能会简化或截短你的标题，以让其更适合作链接。比如"I'll Make A Wish"这个标题可能会被截短为"ill-make-a-wish"。
 
 在WordPress中，可以将日志缩略名缩略为其它形式，如"make-a- wish",这比“生病时许愿”听起来舒服多了。
 
-\item 摘要
+\section{Summary}
+
 
 摘要是博客日志的简要概括，它有许多显示方式。在WordPress中, 摘要可以是特意撰写的文章总结性语句，或是日志前几段自动生成的文字，也可以是作者指定的某一句话。
 
-\item 插件
+\section{Plugins}
+
 
 插件是程序脚本上很酷的“饰品”，可用增强博客的已有功能，或添加新功能。
 
 添加WordPress插件非常容易。在管理面板上就可以找到插件页面。从WordPress插件目录上下载插件后，在插件管理子面板上将它激活就可以了。当然，并不是所有的插件安装都很简单，但WordPress插件作者和开发者会使这个过程尽量简单。
 
-\end{compactitem}
 
-\section{WordPress Semantics}
+\section{Validation}
+
+简单说，验证（Validate/Validating/Validation）就是检查下代码有没有错误，而验证又分为：XHTML Validator 和 CSS Validator。
+
+
+
+
+
+\chapter{Semantics}
 
 As with many software packages, WordPress has its own lingo or jargon. This article will introduce you to some of the terminology used in WordPress.
 
-\subsection{Introduction}
+\section{Introduction}
 
 WordPress was created by the developers as weblogging or blogging software. A blog, as defined in the Codex Glossary, is an online journal, diary, or serial, published by a person or group of people. Many blogs are personal in nature, reflecting the opinions and interests of the owner. But, blogs are now important tools in the world of news, business, politics, and entertainment.
 
 Blogs are a form of a Content Management System (CMS) which Wikipedia calls "a system used to organize and facilitate collaborative content creation." Both blogs and Content Management Systems can perform the role of a website (site for short). A website can be thought of as a collection of articles and information about a specific subject, service, or product, which may not be a personal reflection of the owner. More recently, as the role of WordPress has expanded, WordPress developers have begun using the more general term site, in place of blog.
 
-\subsection{Terminology Related to Content}
+\section{Terminology Related to Content}
 
 The term Word in WordPress refers to the words used to compose posts. Posts are the principal element (or content) of a blog. The posts are the writings, compositions, discussions, discourses, musings, and, yes, the rantings of the blog's owner and guest authors. Posts, in most cases, are the reason a blog exists; without posts, there is no blog!
 
@@ -378,7 +703,7 @@ After a post is made public, a blog's readers will respond, via comments, to tha
 
 Finally, WordPress also offers two other content management tools called Pages and custom post types. Pages often present static information, such as "About Me", or "Contact Us", Pages. Typically "timeless" in nature, Pages should not be confused with the time-oriented objects called posts. Interestingly, a Page is allowed to be commented upon, but a Page cannot be categorized. A custom post type refers to a type of structured data that is different from a post or a page. Custom post types allow users to easily create and manage such things as portfolios, projects, video libraries, podcasts, quotes, chats, and whatever a user or developer can imagine.
 
-\subsection{Terminology Related to Design}
+\section{Terminology Related to Design}
 
 The flexibility of WordPress is apparent when discussing terminology related to the design of a WordPress blog. At the core of WordPress, developers created a programming structure named The Loop to handle the processing of posts. The Loop is the critical PHP program code used to display posts. Anyone wanting to enhance and customize WordPress will need to understand the mechanics of The Loop.
 
@@ -399,7 +724,7 @@ And speaking of the WordPress Twenty Twelve theme, developers and users are enco
 
 Plugins are custom functions created to extend the core functionality of WordPress. The WordPress developers have maximized flexibility and minimized code bloat by allowing outside developers the opportunity to create their own useful add-on features. As evidenced by the Plugin Directory, there's a Plugin to enhance virtually every aspect of WordPress. A Plugin management tool makes it extremely easy to find and install Plugins.
 
-\subsection{Terminology for the Administrator}
+\section{Terminology for the Administrator}
 
 Another set of terms to examine are those involving the Administration of a WordPress site. A comprehensive set of Administration Panels enables users to easily administer and monitor their blog. A WordPress administrator has a number of powers which include requiring a visitor to register in order to participate in the blog, who can create new posts, whether comments can be left, and if files can be uploaded to the blog. An Administrator also defines Links and the associated Link Categories which are an important part of a blog's connection to the outside world.
 
@@ -409,7 +734,7 @@ Another chief concern for the blog administrator is Comment Moderation. Comments
 
 And not to be forgotten is the obligation for an administrator to keep their WordPress current to insure that the latest features, bugs, and security fixes are in effect. To accomodate administrators, WordPress has a simple Upgrade Tool to download and install the lastest version of WordPress. There's no excuse to not upgrade!
 
-\subsection{The Terminology of Help}
+\section{The Terminology of Help}
 
 
 The final set of jargon relates to helping you with WordPress. First and foremost is the hanging Help tab that is displayed under each of the Administration SubPanels. That contextual help describes the function and use of the current SubPanel and provides links to other help topics. And, there are other help resources available to WordPress users; Getting More Help, Finding WordPress Help, Troubleshooting, and WordPress FAQ (frequently asked questions) are good starting points. Also Getting Started with WordPress will jump-start readers into the world of WordPress and the excellent WordPress Lessons provide in-depth tutorials on many of the aspects of using WordPress. Among the most important resources is the WordPress Support Forum where knowledgeable volunteers answer your questions and help solve any problems related to WordPress. And, of course, this Codex which is filled with hundreds of articles designed to make your WordPress experience a success!
@@ -417,7 +742,7 @@ The final set of jargon relates to helping you with WordPress. First and foremos
 
 
 
-\section{WordPress Themes}
+\chapter{Themes}
 
 Once you are familiar with how WordPress works, it's time to get creative and start customizing. The tutorial now splits into different subjects that require no order. From here on you can do whatever you want, adding and subtracting, perfecting and scrambling your site at will. The amount of effort you put into the site is now up to you. You can work with the two WordPress Themes that came with the installation, or seek out another Theme that better meets your needs. You can totally customize all the links and information, or get serious and completely re-design the entire site to do whatever you want. You have the basics, the rest is up to your imagination.
 
@@ -429,22 +754,60 @@ There are hundreds of WordPress Themes to choose from. All do basically the same
 
 When you are ready to plunge into the code, you can customize the look and layout of the site through CSS and modifing the Themes (or create your own).If you run into problems, check out the Codex's Troubleshooting Themes article.
 
-If you are familiar with CSS, HTML, and even PHP and MySQL, consider customizing the Theme to your own needs. This is not for the timid, and it is for the informed and experienced. If you want to expand your web page design and development skills, WordPress can help:
+If you are familiar with CSS, HTML, and even PHP and MySQL, consider customizing the Theme to your own needs. This is not for the timid, and it is for the informed and experienced. 
+
+You may wish to develop WordPress Themes for your own use, for a client project or to submit to the WordPress Theme Directory. Why else should you build a WordPress Theme?
+
 \begin{compactitem}
-\item \href{http://codex.wordpress.org/Using_Themes}{Using Themes}
-\item \href{http://codex.wordpress.org/Theme_Development}{Theme Development}
-\item \href{http://codex.wordpress.org/Stepping_Into_Templates}{Stepping Into Templates}
-\item \href{http://codex.wordpress.org/Templates}{Templates Files}
-\item \href{http://codex.wordpress.org/Blog_Design_and_Layout}{Blog Design and Layout}
-\item \href{http://codex.wordpress.org/CSS}{CSS Overview, Tips, Techniques, and Resources}
-\item \href{http://codex.wordpress.org/FAQ#Layout}{FAQ - WordPress Layout}
-\item \href{http://codex.wordpress.org/Stepping_Into_Template_Tags}{Stepping Into Template Tags}
-\item \href{http://codex.wordpress.org/Template_Tags}{Template Tags}
-\item \href{http://codex.wordpress.org/CSS_Troubleshooting}{CSS Troubleshooting}
-\item \href{http://codex.wordpress.org/CSS_Fixing_Browser_Bugs}{CSS Fixing Browser Bugs}
+\item To create a unique look for your WordPress site.
+\item To take advantage of templates, template tags, and the WordPress Loop to generate different website results and looks.
+\item To provide alternative templates for specific site features, such as category pages and search result pages.
+\item To quickly switch between two site layouts, or to take advantage of a Theme or style switcher to allow site owners to change the look of your site.
 \end{compactitem}
 
-\section{WordPress Plugins}
+
+
+A WordPress Theme has many benefits, too.
+
+\begin{compactitem}
+\item It separates the presentation styles and template files from the system files so the site will upgrade without drastic changes to the visual presentation of the site.
+\item It allows for customization of the site functionality unique to that Theme.
+\item It allows for quick changes of the visual design and layout of a WordPress site.
+\item It removes the need for a typical WordPress site owner to have to learn CSS, HTML, and PHP in order to have a great-looking website.
+\end{compactitem}
+
+WordPress具有一个带模板处理器（template processor）的页面模板系统（web template system），从而可让用户不改变博客内容和结构的情况下更改界面和WordPress站点的功能，可以在WordPress的“外观”管理工具中来安装主题，或者通过FTP上传至主题文件夹，也可以通过编辑主题中的PHP和HTML代码自定义主题。
+
+
+也许想为自己开发 WordPress 主题，或者制作公开发行的的主题。但是除了这个为什么要自己制作主题呢?
+
+
+\begin{compactitem}
+\item 创建自定义的、独特的 WordPress 主题外观。
+\item 利用模板、模板标签和WordPress循环来产生不同的效果。
+\item 为了产生不同的效果，比如在category pages页面和搜索结果页面产生个性化的效果。
+\item 为了迅速从两个主题改变你的博客外观，可以利用theme or style switcher插件迅速改变外观。
+\item 设计 WordPress 主题，这样大家就可以通过网络更好的使用你的作品。
+\end{compactitem}
+
+WordPress 主题有很多优点：
+
+\begin{compactitem}
+\item WordPress主题把CSS样式表和模板文件从系统中独立出来，这样升级博客的时候就不会破坏主题样式。
+\item 允许自由的定制主题样式。
+\item 允许迅速改变主题。
+\item 不需要太多HTML、CSS、PHP技术，即可拥有一个美观的主题。
+\end{compactitem}
+
+
+2007年7月10日，因为WordPress意见论坛和Mark Ghosh博客Weblog Tools Collection的一篇博文，Matt Mullenweg宣布官方WordPress主题目录将不再提供商业主题。尽管这被商业主题的设计师和用户批评，但是对于将此类主题视为骚扰的WordPress用户还是支持了这一决定。官方主题目录在声明过后暂停接受新的主题，这包括了那些没有包含赞助链接的主题。商业主题和带赞助链接的主题仍能在第三方主题网站下载。
+
+2008年7月18日，WordPress.org开放了新的主题目录，将主题和插件放在一起[36]任何上传的主题都将被先机器审查，再人工审核。
+
+2008年12月12日，因一些主题未遵循GPL协议，WordPress主题目录中删除了超过200个主题。现在，官方仅认可在主题中加入作者相关信息，而不允许增加赞助链接或与GPL冲突的主题，非GPL授权的主题被放在了其他主题网站上。
+
+
+\chapter{Plugins}
 
 WordPress Plugins are also known as add-ons or extensions. They are software scripts that add functions and events to your website. They cover the gamut from up-to-date weather reports to simple organization of your posts and categories. Plugins are designed by volunteer contributors and enthusiasts who like challenges and problem solving. They are usually fairly simple to install through the WordPress Admin Plugin panel, just follow the instructions provided by the plugin author. Remember, these are free and non-essential. If you have any problems with plugins, contact the plugin author's website or plugin source first, then search the Internet for help with that specific plugin, and if you haven't found a solution, then visit the WordPress forums for more help.
 \begin{compactitem}
@@ -497,180 +860,16 @@ Give it a try. It's really easy, and makes blogging and adding information to yo
 
 
 
-\chapter{Weblog}
+\bibliographystyle{plainnat}
+\bibliography{WPN}
+\clearpage
 
-\section{Introduction}
 
-“博客”是“网络博客”（weblog）的缩写，是指以时间为顺序记录信息并保持更新的网站。它通常是以日记形式撰写的个人主页，还包含其它网站的链接。从个人生活到政治话题都可成为博客内容，也就是说，它可以只涉及单个狭窄主题也可以包括所有主题范围。
 
-很多博客都专注于单独的主题,比如网页设计、家庭理财、体育以及手机等无线技术。还有很多是关于作者的日常生活以及自己的思考。
 
-一般来说（虽然有例外），博客包括以下内容：
-\begin{compactitem}
-\item 主要的内容区，其中文章按时间顺序排列，最新文章在最上面。通常还有文章类别。
-\item 以前日志的存档
-\item 评论区域
-\item 其它网站的链接列表，有时称作"友情链接"。
-\item 一个或者多个``feeds"， 如RSS, Atom 或RDF 文件。
-\end{compactitem}
 
-当然，不排除有些博客还包括其它功能。
 
-\section{Blog\&CMS}
 
-CMS 或者"内容管理系统" 是用来管理网站的软件。大多数博客软件都是一种CMS，它们提供创建和维护博客功能，使人们在因特网上发表日志像写文章那样简单，只要给文章一个标题，并将标题放在（一个或者多个）类别下面就可开始编写内容了。CMS程序提供的功能较为庞大复杂，但博客工具让你仅凭直觉就能轻松的完成操作，而它则负责处理文章显示效果及公共访问这类后台工作。换句话说，你负责撰写，而博客工具则负责帮你管理网站！
-
-WordPress致力于改善博客外观，提升博客性能，同时使它产生的html代码符合网络标准。它是一个高级的博客工具，提供了一套完整丰富的功能。在管理面板上，可设置显示效果及各种功能，轻松地撰写日志,然后按下按钮，就能将它立即发表到因特网上！
-
-创建新博客确实很困难，许多人因此望而却步。也确有博客没有评论也无人访问。你想从千百万博客中脱颖而出，想让你的博客成为那几十万个真正被访问的博客之一吗？
-
-下面的简单贴士会帮助你掌握博客技巧：
-
-\begin{compactenum}
-\item 定期发表日志，但如果没有什么值得发表的，就不要发表。
-\item 坚持只谈论几个特别话题。
-\item 不要在首页上放满了 '订阅'和 '给我投票'的链接，除非有人特别喜欢你的博客，以致可以忽视这些（但它们通常只会起负面作用） 。
-\item 如果可能的话，尽量使用简明的主题。
-\item 享受写博客的乐趣吧，记得给其他博客发表评论（因为他们一般会回访！）！
-\end{compactenum}
-
-\section{Posts}
-
-对任何网站来说，内容是存在的理由。零售类网站以产品的目录为特色。大学的网站包含了他们的校园、课程和老师等信息。新闻类网站展示了最新的新闻故事。对一个个人博客来说，上面可能有一堆的意见或评论。如果没有内容被更新，我们根本没有理由访问一个站点两次。
-
-在一个博客上，内容包括了作者写的文章（有时候也被叫做"posts"或者"entries"）。的确，有的博客有多位作者，他们分别写各自的文章。通常情况下，博客作者在一个基于网络构建的博客系统中撰写文章。一些博客系统还支持使用独立的“博客客户端”软件，它允许作者离线写文章，稍后再上传。
-
-\section{Comments}
-
-
-
-什么是交互式网站？如果网站访客能够留下关于网站或文章的评论，小贴士，或感想，这不是更有趣吗？在博客上，就能这样做了！博客最令人兴奋的一点就是能在上面发表评论。
-
-大多数博客能允许访客发表评论，有的甚至能让其它博客作者在不访问博客的情况下就能留下评论，以及链接日志并向他人推荐日志，这就是"pingbacks" 或者"trackbacks"。无论何时，只要在自己的文章中引用了其它站点的文章， trackback就会通知其它bloggers。这就加强了网站之间的交流和沟通。
-
-\begin{compactenum}
-\item Trackbacks
-
-\href{http://codex.wordpress.org/Glossary#Trackback}{Trackbacks}最早是由\href{http://www.movabletype.org/}{MovableType}博客软件包的创建者——SixApart开发的。
-
-\fbox{%
-	\parbox[c][50pt][t]{350pt}{
-简单来说， TrackBack是在网站间互通消息的工具：是甲向乙说话的一种方法，"你可能对这个有兴趣。"甲若要向乙表达这个句子，就要向乙发送一个 TrackBack ping。}%
-}
-
-下面是一个更好的解释：
-\begin{compactitem}
-\item 甲在博客上发表一篇日志。
-\item 乙在甲的博客上评论，但也想让自己的访客看看评论内容，并让其能在自己的博客上评论。
-\item 乙在自己的博客上发表日志，同时向甲的博客发送一个trackback。
-\item 甲的博客收到了显示原始文章评论的trackback，且评论包含了乙的文章链接。
-\end{compactitem}
-
-这个方法使更多的人加入了讨论（甲和乙的读者都可以通过链接看到对方的文章），trackback有一定的真实性，因为它们来自另一个博客。不幸地是，引入的trackback并没有真正的真实性，它们的确可以伪造。
-
-多数trackbacks只将乙所说的一小部分（称作"摘要"）发送给甲，这个"内容摘要"鼓励他们点击到乙的站点阅读其余内容（可能是评论）。通常情况下，乙向甲的博客发送的trackback贴满了评论。当然，甲可以在他自己的服务器上编辑评论，但这也意味着"真实性"问题并没有真正得到解决。(注: 甲只能在他自己的服务器上改变trackback的内容。他不能编辑发送trackback的乙站点上的文章。)
-
-SixApart已发布\href{http://www.movabletype.org/docs/mttrackback.html}{官方trackback说明}。
-
-\item Pingbacks
-
-Pingbacks的产生是为了解决trackback遗留的问题。 然而，官方的pingback文档使pingbacks听起来和trackbacks一样糟糕：
-
-\fbox{%
-	\parbox[c][65pt][t]{350pt}{
-例如，Yvonne在她的博客上写了一篇有趣的文章。Kathleen阅读了Yvonne的文章，做了评论并链接了Yvonne的原始文章。使用 pingback,Kathleen的博客会自动通知Yvonne,她的博客已被链接，Yvonne的博客就会将这个信息加入到她的网站。	
-	}%
-}
-
-pingbacks和trackbacks有三个重要区别：
-
-\begin{compactitem}
-\item Pingbacks和trackbacks使用了两种完全不同的信息技术(分别是XML-RPC和HTTP POST)。
-\item Pingbacks支持自动察觉，软件能自动发现文章中的链接并自动尝试pingback这些URLs,然而使用Trackbacks时，必须手动输入 trackbacks要发送到的trackback URL.
-\item Pingbacks不发送任何内容。
-\end{compactitem}
-
-理解pingbacks的最好办法是把它看作远程评论：
-
-\begin{compactitem}
-\item 甲在他的博客上发表一篇日志。
-\item 乙在她自己的博客上发表日志并链接甲的文章。若双方都有激活的pingback，系统将自动给甲发送pingback.
-\item 甲的博客收到了pingback,然后自动来到乙的文章来确认pingback是否确实源自那里。
-\end{compactitem}
-
-显示在甲博客上的Pingback就是乙博客的日志链接。这样，文章的所有编辑都由作者来控制（trackback摘要是可由接受者编辑的）。自动确认过程引进了一定的真实性，这就使伪造pingback变得更难了。
-
-有些人觉得trackbacks较好，因为甲的读者至少可以看见乙所说的一些话，然后决定是否要阅读更多的内容（然后点击到乙的博客）。有的人则认为 pingbacks较好，因为它们在文章之间创建了一个可证实的连接。
-
-\item 核实 Pingbacks和Trackbacks
-
-经常有人批评博客中的评论缺少权威性,因为所有人都可以用他们喜欢的名字任意发表评论，但却没有核实过程来确认发表人就是页面上显示的评论人。而Trackbacks 和Pingbacks使这一状况有所改善，因为它们都可用来核实评论。
-
-\item 审核评论
-
-审核评论允许网站所有者和作者监控和管理日志评论，并有助于处理评论中的垃圾广告。可用它来审核评论，删除不受欢迎的评论，批准通过较好评论或对评论做出其它安排。
-
-\item 垃圾评论
-
-垃圾评论是指博客上发布的无用评论（或trackbacks,或pingbacks），通常与文章内容无关。它们可以包含一个或多个其它网站或域名链接。为使他们的域名在Google中获得更高的网页排名，发送垃圾广告的人把评论作为工具，那样的话，他们未来就可将域名以更高的价格出售或者在现有网站的搜索结果中获得更高的排名。
-
-发送垃圾广告的人是毫不留情的；因为这涉及到真正的钱，他们努力"工作"，甚至创建自动工具（机器人）迅速散发他们的垃圾广告。许多博客，特别是新手，常觉得网站简直被垃圾评论包围了。
-
-然而，我们对此有解决办法！因为WordPress有许多用来打击垃圾评论的工具。预先稍作努力就可以控制垃圾评论，我们当然没理由为此放弃博客。
-
-
-\end{compactenum}
-
-
-
-
-
-
-
-\chapter{WordPress.org}
-
-\section{Introduction}
-
-On this site you can download and install a software script called WordPress. To do this you need a web host who meets the \href{http://wordpress.org/about/requirements/}{minimum requirements} and a little time. WordPress is completely customizable and can be used for almost anything. There is also a service called \href{http://wordpress.com/?ref=wporg-about}{WordPress.com} which lets you get started with a new and free WordPress-based blog in seconds, but varies in several ways and is less flexible than the WordPress you download and install yourself.
-
-WordPress was born out of a desire for an elegant, well-architectured personal publishing system built on \href{http://php.net/}{PHP} and \href{http://mysql.com/}{MySQL} and licensed under the \href{http://www.gnu.org/copyleft/gpl.html}{GPLv2} (or later). It is the official successor of b2/cafelog. WordPress is fresh software, but its roots and development go back to 2001. It is a mature and stable product. We hope by focusing on user experience and \href{http://webstandards.org/}{web standards} we can create a tool different from anything else out there.
-
-The license under which the WordPress software is released is the GPLv2 (or later) from the \href{http://www.fsf.org/}{Free Software Foundation}. A copy of the license is included with every copy of WordPress, but you can also read \href{http://wordpress.org/about/gpl/}{the text of the license} here.
-
-Part of this license outlines requirements for derivative works, such as plugins or themes. Derivatives of WordPress code inherit the GPL license. \href{http://drupal.org/}{Drupal}, which has the same GPL license as WordPress, has an excellent page on \href{http://drupal.org/licensing/faq/}{licensing as it applies to themes and modules}(their word for plugins).
-
-There is some legal grey area regarding what is considered a derivative work, but we feel strongly that plugins and themes are derivative work and thus inherit the GPL license. If you disagree, you might want to consider a non-GPL platform such as \href{http://www.s9y.org/}{Serendipity} (BSD license) or \href{http://habariproject.org/en/}{Habari} (Apache license) instead.
-
-We've got a variety of resources to help you get the most out of WordPress. Your first stop should be our \href{http://codex.wordpress.org/}{documentation}, where you'll find information on everything from installing WordPress for the first time to creating your own themes and plugins.
-
-For a bit more about WordPress' history \href{http://en.wikipedia.org/wiki/WordPress}{check out the WordPress Wikipedia page} or \href{http://codex.wordpress.org/History}{this page on our own Codex}.
-
-\chapter{Requirement}
-
-To run WordPress your host just needs a couple of things:
-\begin{compactitem}
-\item \href{http://www.php.net/}{PHP} version 5.2.4 or greater
-\item \href{http://www.mysql.com/}{MySQL} version 5.0 or greater
-\item \href{http://httpd.apache.org/docs/current/mod/mod_rewrite.html}{Apache mod\_rewrite module} Apache mod\_rewrite模块\footnote{可选，用于支持“固定链接”和“站点网络”功能。}
-\end{compactitem}
-
-The requirements have changed as of WordPress 3.2. The minimum requirements for WordPress 3.1 are PHP 4.3 and MySQL 4.1.2.
-
-That’s really it. We recommend \href{http://httpd.apache.org/}{Apache} or \href{http://nginx.net/}{Nginx} as the most robust and featureful server for running WordPress, but any server that supports PHP and MySQL will do. That said, we can’t test every possible environment and \href{http://wordpress.org/hosting/}{each of the hosts on our hosting page} supports the above and more with no problems.
-
-\textbf{Not required, but recommended for better security}
-
-Hosting is more secure when PHP applications, like WordPress, are run using your account’s username instead of the server’s default shared username. The most common way nowadays for hosting companies to do this is using \href{http://www.suphp.org/}{suPHP}. Just ask your potential host if they run suPHP or something similar.
-
-\chapter{Features}
-
-WordPress powers more than 17\% of the web - a figure that rises every day. Everything from simple websites, to blogs, to complex portals and enterprise websites, and even applications, are built with WordPress.
-
-WordPress combines simplicity for users and publishers with under-the-hood complexity for developers. This makes it flexible while still being easy-to-use.
-
-The following is a list of some of the features that come as standard with WordPress, however there are literally thousands of plugins that extend what WordPress does, so the actual functionality is nearly limitless. You are also free to do whatever you like with the WordPress code, extend it or modify in any way or use it for commercial projects without any licensing fees. That is the beauty of free software, free refers not only to price but also the freedom to have complete control over it.
-
-Here are some of the features that we think that you'll love.
 
 
 
