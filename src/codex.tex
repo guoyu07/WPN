@@ -1,0 +1,2183 @@
+\part{Codex}
+
+
+
+\chapter{The Loop}
+
+WordPress users may install and switch between themes. Themes allow users to change the look and functionality of a WordPress website or installation without altering the information content or structure of the site. Themes may be installed using the WordPress ``Appearance" administration tool or theme folders may be uploaded via FTP.[9] The PHP, HTML \& CSS code found in themes can be added or edited for providing advanced features. Thousands of WordPress themes exist, some free, and some premium (paid for) templates.
+
+
+Templates are the files which control how your WordPress site will be displayed on the Web. These files draw information from your WordPress MySQL database and generate the HTML code which is sent to the web browser. Through its powerful Theme system, WordPress allows you to define as few or as many Templates as you like all under one Theme. Each of these Template files can be configured for use under specific situations.
+
+Template files are the building blocks of your WordPress site. They fit together like the pieces of a puzzle to generate the web pages on your site. Some templates (the header and footer template files for example) are used on all the web pages, while others are used only under specific conditions.
+
+
+A traditional web page consists of two files:
+
+\begin{compactitem}
+\item The XHTML page to hold the structure and content of the page and
+\item the CSS Style Sheet which holds the presentation styles of the page.
+\end{compactitem}
+
+In WordPress, the (X)HTML structure and the CSS style sheet are present but the content is generated ``behind the scenes" by various template files. The template files and the style sheet are stored together as a WordPress Theme. 
+
+传统的网页包含两个文件，其中XHTML页 构建网页的框架和内容，而CSS样式表决定网页的风格表现。在WordPress中，(X)HTML结构和CSS样式表是固定的，但是网页中的内容都是由各个模板文件在后台生成的。
+
+
+
+
+WordPress 主题包含一系列模板文件和 CSS 样式表，主题文件和样式表存储在一起就成为了一个WordPress主题，在样式表中说明了主题的基本信息\cite{wp_style_css}。
+
+在出现主题之前，WordPress只有一个用来生成内容的index.php文件，还有一些支持评论显示和提交的文件。另外，一个单独的样式表文件style.css来控制界面效果。
+
+\begin{lstlisting}[language=CSS]
+/*
+Theme Name: theqiong
+Theme URI: 
+Author: theqiong
+Author URI: http://thqiong.com/
+Description: The style sheet file of theqiong theme
+Version: 0.01
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/license/gpl-2.0.html
+Tags: theqiong
+Text Domain: theqiong
+
+This theme, like WordPress, is licensed under the GPL.
+It is a test theme.
+*/
+
+/*
+ * Table of Contents:
+ * 1.0 - Reset
+ * ---------------------------------------------------------
+ */
+ 
+ ...
+\end{lstlisting}
+
+在主题信息两边的 /* 和 */ 符号是为了让主题的信息不影响该文件的其他内容，这是 CSS 的注释。接下来的是主题的信息，包括名字、网址、描述、版本号、作者以及作者的主页等信息。
+
+现在，每个主题至少也要有这两个文件，其中index.php控制主题首页元素如何布局，而style.css则控制主题中所有元素的样式，除此之外还有一些其它的文件（不是必须），它们和 index.php 文件间存在优先级关系，如果它们存在，WP 模板系统就会调用它们显示相应的页面，否则模板系统会调用 index.php 来显示，其它所有的页面（包括分类和归档页面）都可以通过传递不同的参数给index.php来生成。
+
+
+
+目前，WordPress已经发展出一个具有模板处理器（template processor）的页面模板系统（web template system），从而可以在不改变网站内容和结构的情况下更改界面和功能。
+
+WordPress新的主题系统提供了两种方便的功能。
+
+\begin{compactitem}
+\item 物理上划分出组件
+
+新的模块化的模板文件系统提供了方法为不同的组件定义物理上分开的文件，这就允许创建出许多功能和设计上都唯一的特殊页面，比如分类归档、月份归档、个人主页等。
+
+\item 快速的改变布局和设计
+
+允许用户通过适当的权限上传新主题来快速的改变整个网站的布局，并且基本上在控制面板就可以切换。
+
+
+\item 旧的生成页面的方法仍然能工作\footnote{如果用户是从v1.2 、 v1.2.1 、 v1.2.2升级，那么他们仍然能继续使用以前的设计，继续使用旧的设计不会影响增加新的主题和在主题前切换。}。
+
+\end{compactitem}
+
+实际应用中，可以在WordPress的“外观”管理工具中来安装主题，或者通过FTP上传至主题文件夹，也可以通过编辑主题中的PHP和HTML代码自定义主题。
+
+WordPress模板文件中，有些模板（例如头部和底部模板文件）应用在所有的网页上，还有一些模板只会在特定条件下才会用到。
+
+WordPress 的层式结构简单的展示了一旦主题中的某个模板文件丢失了，WordPress 主题系统将会寻找什么模板文件来代替。这里仅列出了 6 个文件而不是完整的 13 个，因为这 6 个是相对更重要一些，不过在后续的主题开发过程中，余下的文件也都涉及到。
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.5]{main-hierarchy.png}
+\caption{WordPress模板层次结构示意图}
+\end{figure}
+
+可以通过上面这张图的所处位置知道各个主题文件的重要性，越靠左越重要。WordPress就是利用这个层式结构去寻找相应的模板文件显示页面，并指定在相应的文件丢失之后如何处理，例如如果archive.php 模板文件（用来显示存档页面）丢失了，那么 WordPress 将会使用 index.php 来控制存档页面如何显示，等等。
+
+
+以创建archive.php为例，
+
+\begin{compactitem}
+\item 创建一个新文件：\texttt{archive.php}
+\item 把\texttt{index.php}中所有东西复制到 \texttt{archive.php}
+\item 保存 \texttt{archive.php}
+\item 在\texttt{archive.php}文件，把\texttt{the\_content}改成\texttt{the\_excerpt}。
+\item 再次保存\texttt{archive.php}文件
+\end{compactitem}
+
+
+刷新存档页面，它将只显示摘要而不是全文的日志。通过创建一个 archive.php 文件并把它改成和 index.php 不一样，这就是定制化存档页面的外观。
+
+如果需要让类别页面和首页和存档页面看起来不一样，那么可以创建一个category.php文件并定制化它。同样，如果没有 search.php 这个模板文件，搜索选项将会使用index.php 去显示搜索结果。
+
+
+
+
+
+\section{Head Template}
+
+在一个网页中，代码主要分为两部分，一个是页头信息，一个是页面内容。每个主题的页头信息都是几乎一样，为保证所有页面的页头信息的一致性，可以把所有页头信息都放入header.php文件中。
+
+\begin{lstlisting}[language=HTML]
+<html>
+<head>
+页头信息
+</head>
+<body>
+页面内容
+</body>
+</html>
+\end{lstlisting}
+
+通常，在Header模板文件（header.php）中包含的是网站的标题（title）和描述（description）等信息，以及网站链接和style.css路径等，这一切都是通过bloginfo()函数实现的。注意，PHP 代码和 HTML 的代码是不一样的。任何时候，PHP 代码都是在 <?php 和 ?> 之间的，其中<?php 代表开始 PHP 代码而 ?> 是结束 PHP 代码。
+
+\texttt{bloginfo()}是调用WordPress的信息的函数，通过\texttt{<?php bloginfo('stylesheet\_url'); ?>} 可以取得 style.css 文件所在的路径，这样主题就能通过style.css来样式化页面上所有元素。
+
+
+对于bloginfo()函数，参数 url 返回网址，参数 description 返回网站描述。如果使用name参数则代表它调用的是网站的标题，这个名字就是在网站页面的Title。
+
+
+
+\begin{compactitem}
+\item \texttt{bloginfo('stylesheet\_url')} – 调用 style.css 文件所在的路径
+\item \texttt{bloginfo('name')} – 调用网站信息，具体是网站的标题。
+\item \texttt{bloginfo('url')} – 调用网站基本信息，具体是首页的的地址或者 URL。
+\item \texttt{bloginfo('description')} – 调用博客信息，具体是网站的描述。
+\end{compactitem}
+
+调用了网站的标题之后，接下来就要把网站的标题放入超链接中，这时候就需要一个 XHTML <a>标签。接下来如果调用网站的描述，则在网站标题链接的下面输入以下代码：因此header.php中的代码示例如下：
+
+
+\begin{lstlisting}[language=PHP]
+<div id="header">
+  <h1><a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a></h1>
+  <?php bloginfo('description'); ?>
+</div>
+\end{lstlisting}
+
+在上面的代码中，就是为网站的标题并加上一个超链接，并且显示描述。首先开始一个链接，其中链接的地址是WordPress网站的URL，用 \texttt{bloginfo('url')}去调用这个地址或者URL。这个链接的文本是网站的标题并使用\texttt{bloginfo('name')}去调用网站的标题，最后结束链接。
+
+
+
+可以把 DIV 想像成一个无形的盒子 (box)，在这里它把网站标题链接和网站描述从其他东西中区分开。如果没有对它进行样式化，它无非是单独的内容，以后可以用 style.css 这个文件来样式化这个无形的盒子，比如给 DIV附上边框（borders）、填充（paddings）、页边空白（margins）、背景颜色（background color）、背景图片（background images）以及其他一些样式。
+
+这里给DIV标签指定了ID，因为将会有更多的DIV标签或者无形的盒子，这里使用ID来加以区分。
+
+可以把上面的代码加上页头部分另存为一个新的文件~——~header.php，然后就可以通过\texttt{get\_header()}函数导入它们。
+
+\begin{lstlisting}[language=PHP]
+<?php get_header(); ?>
+\end{lstlisting}
+
+
+WordPress主题系统特别用\texttt{get\_header()}来导入header.php文件的函数，而不用使用PHP的函数：
+
+\begin{lstlisting}[language=PHP]
+<?php include (TEMPLATEPATH . '/header.php'); ?>
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Index Template}
+
+
+The Loop is PHP code used by WordPress to display posts. Using The Loop, WordPress processes each post to be displayed on the current page, and formats it according to how it matches specified criteria within The Loop tags. Any HTML or PHP code in the Loop will be processed on each post.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.5]{wordpress_loop.png}
+\caption{The Loop}
+\end{figure}
+
+``The Loop" is the main process of WordPress, The Loop is used in template files to show posts to visitors. You could make templates without The Loop, but you could only display data from one post.
+
+Before The Loop goes into action, WordPress verifies that all the files it needs are present. Then it collects the default settings, as defined by the website administrator, from the database. 
+
+This includes the number of posts to display per page, whether commenting is enabled, and more. Once these defaults are established, WordPress checks to see what the user asked for. This information is used to determine which posts to fetch from the database.
+
+
+When WordPress documentation says ``This tag must be within The Loop", such as for specific template tag or plugins, the tag will be repeated for each post. For example, The Loop displays the following information by default for each post:
+
+\begin{compactitem}
+\item Title (the\_title())
+\item Time (the\_time())
+\item Categories (the\_category())
+\end{compactitem}
+
+If the user didn't ask for a specific post, category, page, or date, WordPress uses the previously collected default values to determine which posts to prepare for the user.
+
+You can display other information about each post using the appropriate Template Tags or (for advanced users) by accessing the \$post variable, which is set with the current post's information while The Loop is running.
+
+For example, if the website administrator has selected to display 5 posts per page in Administration > Settings > Reading, then WordPress will fetch the five most recent posts from the database. If the user did ask for a specific post, category, page, or date, then WordPress will use that information to specify which post(s) to fetch from the database.
+
+After all this is done, WordPress connects to the database, retrieves the specified information, and stores the results in a variable. The Loop uses this variable's value for display in your templates.
+
+By default, if the visitor did not select a specific post, page, category, or date, WordPress uses index.php to display everything. For the first part of this discussion of The Loop we'll focus only on index.php, and the default display of your website. Later on, once you understand how things work, we'll investigate tricks with The Loop in other template files.
+
+
+Index模板文件（index.php）包含文章的标题（Heading）、文章的内容（Contents，或者说是每篇文章的文本和图片）和文章的元数据（Metadata）\footnote{元数据是每篇文章的额外信息，如作者是谁，文章发布的时间，在哪个分类下，有多少留言等。}等。
+
+
+
+index.php会根据不同类型的页面而发生变化，例如在单一日志页面时，将会包含这四个模板文件：header.php、single.php、sidebar.php和footer.php，如下所示：
+
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.5]{single.png}
+\caption{单一日志页面}
+\end{figure}
+
+“循环”\cite{the_loop}是WordPress的主要过程，在模板文件中通过循环来显示文章给访问者，虽然在模板页中可以不包含循环，但是这样就可能只能显示一篇文章的内容。
+
+调用网站内容的主循环（The Loop）是 WordPress 中最重要的 PHP 代码集，几乎所有的页面都会用到它。在进行WordPress开发的时候，首先必须要了解主循环和全局变量，这样才知道可以访问哪个全局变量。
+
+在循环开始执行之前，WordPress会审核它所需的文件是否准备好了，然后它会从数据库数据中收集网站管理员（Website Administrator）默认的设置，其中包括在每一个页面上显示的文章数目，是否开启评论功能，或者更多。
+
+一旦这些默认的设置确定了，WordPress会检查访问者的请求，这些请求将会被用来决定哪些数据会从数据库中提取出来。
+
+
+简单来说，WordPress\texttt{主循环}（The Loop）是用来显示文章列表以及在单篇文章页面显示评论列表的，WordPress处理并根据在循环内的标准来格式化将在最近的页面上显示的每一篇文章。在循环中，在每一篇文章中包含的HTML或者PHP代码都会被处理。
+
+
+当WordPress文件中说明“这些标记必须被包含在循环中”时，比如特定的模板标记或者插件，这些标记将会在每一篇文章中循环执行。比如，下面的循环默认显示每篇文章的以下信息：
+
+\begin{compactitem}
+\item Title (the\_title()) - 文章标题
+\item Time (the\_time()) - 文章发表时间
+\item Categories (the\_category()) - 文章分类
+\end{compactitem}
+
+循环里默认展示的信息包括：标题 (the\_title())、时间(the\_time())和分类 (the\_category())等。 其他可选的的信息包括模板标签或调用\$post 变量, 其中包含循环中当前文章的各种信息。
+
+
+
+如果用户没有要求某一篇特别的文章、种类、页面或时间，WordPress会使用前面的默认值来决定哪些文章会准备显示给用户。
+
+在循环运行时，我们也可以使用适当的模板标记通过访问文章的参数来显示每一篇文章的其他信息。
+
+举例来说，如果网站管理员在“管理-设置-阅读”中设置在每一个页面上显示5篇文章，那么WordPress将会从数据库中最近的文章里抓取5篇文章。如果用户确实要请求某一篇特定的文章、种类、页面或者时间，WordPress将会通过这些信息来指定从数据库中抓取哪一篇文章。
+
+这些操作完成后，WordPress将会连接数据库，检索这些指定的信息，然后把结果存储在变量中，而循环在模板页中就是使用这些变量的值来显示文章的\footnote{WordPress从数据库中取出的数据只是存储在变量中，至于怎么显示还是要由模板标签等来格式化的。}。
+
+默认情况下，如果访问者没有选取特定的文章、页面、种类或日期的话，WordPress使用index.php来显示所有信息，因此在开始的阶段，可以只集中关注index.php和网站的默认显示，在理解了WordPress的运作过程后，再探讨在其他模板页中循环的使用技巧。
+
+
+下面展示了一个全功能的首页文件(index.php)，它仅展示了每篇文章的内容，使用中视具体情况去调整循环。 
+
+这个例子的目的是向用户证明一个循环是多么简单，实际上大多数在index.php 里的循环增加了更多的CSS、HTML和PHP代码等，这些都让这个循环看起来更强大也更漂亮。
+
+\begin{lstlisting}[language=PHP]
+<?php
+get_header();
+if (have_posts()) : /* 检查网站是否有文章。*/
+  while (have_posts()) : /* 如果有文章，执行the_post()函数。*/
+    the_post(); /* 调用具体的文章来显示。*/
+    the_title(); /* 输出文章的标题。*/
+    the_content(); /* 输出文章的内容。*/
+  endwhile; /* 结束while() */
+endif; /* 结束if() */
+get_sidebar();
+get_footer(); 
+?>
+\end{lstlisting}
+
+
+其中，have\_posts() 和 the\_post() 这两个函数都是类 WP\_Query 的方法。have\_posts这个函数去查看当前显示的文章数是否达到了在 WordPress 后台设置的要显示的数目，这个主循环将会继续直到达到为止。
+
+在the\_post 函数的实现中会发现它会搜索\$post这个全局变量，the\_post 函数获取第一篇文章（随后的文章通过每次循环获取下一个），并设置日志的数据（如作者、多重-页面，等等），这些数据是WordPress赋给\$post 这个全局变量的，所以我们可以访问它。
+
+并不是所有的代码都需要两部分用来打开和关闭。有些代码能够自我关闭，这就解释了 have\_posts() 和 the\_post()这两个函数。因为 the\_post()在 if() 和 while() 的外面，只需要分号去结束或者关闭。
+
+也可以写成：
+
+
+\begin{lstlisting}[language=PHP]
+<?php get_header(); ?>
+<?php if(have_posts() ) : /* 检查网站是否有文章。*/ ?> 
+  <?php while(have_posts() ) : /* 如果有文章，执行the_post()函数。*/ ?>
+    <?php the_post(); /* 调用具体的文章来显示。*/ ?>
+    <?php the_title(); /* 输出文章的标题。*/ ?>
+    <?php the_content(); /* 输出文章的内容。*/ ?>
+  <?php endwhile; /* 结束while() */ ?>
+<?php endif; /* 结束if() */ ?>
+<?php get_sidebar(); ?>
+<?php get_footer(); ?>
+\end{lstlisting}
+
+
+the\_post() 函数被调用之后，我们就可以使用许多模板函数和全局变量，下面就是现在可用的部分模板函数：
+
+\begin{compactitem}
+\item the\_author：获取作者的名字。
+\item the\_title：显示当前文章的标题。
+\item the\_content：显示文章的内容。
+\item the\_permalink：显示文章的永久链接的 URL。
+\item the\_ID：显示文章的 ID。
+\end{compactitem}
+
+
+下面是在主循环中可用的全局变量：
+
+\begin{compactitem}
+\item 全局变量 authordata：
+\end{compactitem}
+
+\begin{lstlisting}[language=PHP]
+global $authordata;
+echo $authordata->display_name;
+\end{lstlisting}
+
+通过 authordata 这个全局变量还可以获取作者的下面这些信息：last\_name, first\_name, ID, user\_email, user\_url, user\_login, description 和其他。
+
+\begin{compactitem}
+\item 全局变量 post：
+\end{compactitem}
+
+\begin{lstlisting}[language=PHP]
+global $post;
+echo $post->post_content;
+\end{lstlisting}
+
+通过 post 这个全局变量还可以获取文章的这些信息：ID, post\_title,  post\_author, post\_date, post\_excerpt, comment\_count 和其他。
+
+通过这种方法获取的日志内容是没有经过过滤的。如果想自己去操纵文章的内容，比如自己设置文章内容的显示方式，通过这种方式获取的文章内容非常有用。
+
+\begin{compactitem}
+\item 全局变量 id：
+\end{compactitem}
+
+\begin{lstlisting}[language=PHP]
+global $id;
+echo $id;
+\end{lstlisting}
+
+
+\subsection{The Default Loop}
+
+“循环”是一个指明WordPress主要程序过程的术语，在模板（template files）中应用循环来把文章展现给访客，也可以定制不包含循环的模板，但是就只能展示一篇文章的数据了。
+
+\subsection{Begin WordPress Loop}
+
+Found at the top of the default index.php template file is the starting code for The Loop.
+
+
+
+\begin{lstlisting}[language=PHP]
+<?php if (have_posts()) : ?>
+  <?php while (have_posts()) : the_post(); ?>
+\end{lstlisting}
+
+\begin{compactenum}
+\item First, it checks whether any posts were discovered with the have\_posts() function.
+\item If there were any posts, a PHP while loop is started. 
+\end{compactenum}
+
+A while loop will continue to execute as long as the condition in the parenthesis is logically true. So, as long as the function have\_posts() returns a true value, the while loop will keep looping (repeating). 
+
+The function have\_posts() simply checks for a next item in the possible collection of posts. If there is another item, the if statement again returns a `true' answer and the while statement is used again. If there is no next item, the if statement returns a `false' answer and The Loop moves on to whatever instructions it has beyond the if and while statements.
+
+
+
+\subsection{Generating the Post}
+
+The function the\_post() takes the current item in the collection of posts and makes it available for use inside this iteration of The Loop. Without the\_post(), many of the Template Tags used in your theme would not work.
+
+Once the post data is made available, the template can start showing post data to the visitor.
+
+在index.php文件顶部可以看到循环如何开始，通常在主题的index.php中的主循环代码如下：
+
+\begin{lstlisting}[language=PHP]
+<?php if( have_posts() ) : ?>
+  <?php while( have_posts() ) : the_post(); ?>
+\end{lstlisting}
+
+
+
+首先, 通过have\_posts()方法来检查是否有文章。如果有文章, PHP while循环开始执行，while 循环会一直执行只要have\_posts()返回真，while循环就不会停止\footnote{have\_posts() 方法单纯的检查下一篇文章能否找到。如果找到了，if判断返回真，while循环就再次执行；如果没有下一篇文章，if判断返回假，跳出循环}。
+
+the\_post()方法返回所有文章中最近的项目，然后在循环的每次迭代中使之可用，没有the\_post()方法，很多主题中的模板标签将不起作用。当文章信息可用时，模板文件向访问者展现文章信息。
+
+
+\subsection{Title, Date and Author}
+
+The following template tags get the current post's title, the time it was posted, and who posted it.
+
+\begin{lstlisting}[language=PHP]
+<h2 id="post-<?php the_ID(); ?>">
+<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title(); ?>">
+<?php the_title(); ?></a><!--Post title-->
+</h2>
+<small><?php the_time('F jS, Y') ?><!--Date-->
+<!-- by <?php the_author() ?> --><!--Author-->
+</small>
+\end{lstlisting}
+
+下面的模板标签 得到了当前文章标题、时间和作者。
+
+\begin{lstlisting}[language=PHP]
+<h2 id="post-<?php the_ID(); ?>">
+<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title(); ?>">
+<?php the_title(); ?></a><!--文章标题-->
+</h2>
+<small><?php the_time('F jS, Y') ?><!--日期-->
+<!-- by <?php the_author() ?> --><!--作者-->
+</small>
+\end{lstlisting}
+
+其中，the\_ID() 只是调用每篇文章的 ID。通过文章ID可以定制个别的文章的展示，这样给每篇文章附加唯一的ID，就可以针对单独的一篇文章进行样式化，使得它和其他文章看起来不一样。如果没有 ID，就没有办法通过 style.css 文件使它和其他文章不一样。
+
+the\_title()可以取得每篇文章的标题，如果不使用 the\_title() 作为\texttt{<a title="<?php the\_title(); ?>"}的值，那么每篇文章标题链接将会有同样的描述。
+
+
+
+
+\subsection{Post Content}
+
+The the\_content() template tag fetches the content of the post, filters it, and then displays it. This is the meat and potatoes of each pass through The Loop:
+
+\begin{lstlisting}[language=PHP]
+<div class="entry">
+  <?php the_content('Read the rest of this entry &raquo;'); ?>
+</div>
+\end{lstlisting}
+
+As the the\_content() documentation states, the <!--more--> quicktag is used to specify an excerpt for the\_content() to display on multi-post pages. The string passed to the\_content() is used for the ``Read More" link after the excerpt. 
+
+模板标签the\_content()实际上是PHP函数，可以抓取文章内容，然后过滤它，最后显示它，the\_content()返回的结果不依赖具体的WordPress主题，应该自己对这些文本和图片进行编码和样式化。
+
+the\_content()调用了文章的内容，只是现在，文章的内容只是一长行的文本，一直到窗口的右边，因为我们还没有样式化它。
+
+style.css这个文件可以控制所有页面元素的显示和布局。这里div 被赋予 \texttt{class="entry"}，通过class就可以准确定位到文章内容并且样式化文章内容，而且不影响页面上其他别的内容。
+
+如果文章包含快速标签叫做“更多”, 写做 \texttt{<!--more-->}，所有之前的将在循环中显示，之后的被省略。单独文章页面\texttt{<!--more-->}将被无视，所以使用\texttt{<!--more-->}可强迫访问者进入单独文章页面。
+
+\subsection{Post Metadata}
+
+The post meta data section is located beneath each post's content in the index.php template file, and is used to display more information about the post, such as the categories, date, and comment information. By placing the edit\_post\_link() template tag function, logged in users of sufficient privilege (or the post's author) will also see an "Edit This" link.
+
+
+
+\begin{lstlisting}[language=PHP]
+<p class="postmetadata">
+Posted in <?php the_category(', ') ?> 
+<strong>|</strong>
+<?php edit_post_link('Edit','','<strong>|</strong>'); ?>  
+<?php comments_popup_link('No Comments »', '1 Comment »', '% Comments »'); ?>
+</p>
+\end{lstlisting}
+
+If commenting is enabled, or if the post has comments, the comments\_popup\_link() template tag will display a link to the comments. If you're using the comments popup window, this link will open the comments window; otherwise it will jump right to this post's comments.
+
+
+
+If the visitor is viewing an index of posts (i.e.: more than one post in The Loop), the comments\_popup\_link() link will take the reader to this post's individual page.
+
+文章的元数据是基于index.php模板文件的下面的内容来显示关于文章的更多信息，比如种类、日期和评论信息。通过放置edit\_post\_link()模板标签，登录的用户就用足够的权力（或者是文章的作者）来发现“编辑这个”链接。
+
+如果开启了评论，或者如果文章有人评论，comments\_popup\_link()模板标签将会显示评论的链接。如果用户使用弹出式评论窗口，这个链接将会打开评论窗口，否则它将会跳到文章的评论部分。如果访客在看文章的列表，评论链接将会让访客跳到这篇文章的独立页面。
+
+the\_category() 是用来调用文章所在的所有类别的 PHP 函数。\texttt{<?php the\_category(','); ?>}中的逗号用来区分类别名。
+
+\texttt{\_e()}是用来创建可以翻译的主题，如果主题被来自不同国家的人使用的话，这是非常重要的。如果是创建公共使用的主题，最后加上\texttt{\_e()}可以使使主题可翻译化。\texttt{<?php \_e('Filed under: '); ?>}是调用冒号“:”的代码，把\texttt{Filed under:}放入\texttt{<?php \_e(''); ?>}中不是必须的，这样主要为了使得Filed under:可翻译。如果主题不需要支持多语言，可以简单输入Filed under:。
+
+只有当我们以管理员或者作者身份登录的时候，\texttt{<?php edit\_post\_link('Edit', '|',''); ?>}语句的执行结果才可见，实际上是“Edit”的链接和一条竖线。
+
+edit\_post\_link()只是简单显示一个可以用来编辑当前文章的编辑链接，这样就可以让我们不必去管理界面搜寻该文章就能直接编辑。edit\_post\_link() 有三个参数，其中第一个是用来确定哪个词将用在编辑链接的链接标题，如果使用 Edit post，那么将显示 Edit post 而不是 Edit。第二个参数是用来显示在链接前面的字符，在这里是竖线 |，代码就是\&124;。第三个参数是用于显示在编辑链接后面的字符，在这里没有使用。
+
+当弹出留言的功能激活时，comments\_popup\_link()调用一个弹出的留言窗口，如果没有激活，comments\_popup\_link()则只是简单的显示留言列表。
+
+\texttt{<?php comments\_popup\_link('No Comments »'),'1 Comment »','\% Comments »'); ?>}语句中，No Comments » 是在没有留言的时候显示的，1 Comment » 是用于当刚好只有1条留言时候。\% Comments »是用于当有多于一条留言的时候。
+
+
+
+
+\subsection{Trackback Auto-Discovery}
+
+The trackback\_rdf() template tag's function is to output machine-readable code used for trackback auto-discovery.
+
+\begin{lstlisting}[language=PHP]
+<!--
+<?php trackback_rdf(); ?>
+-->
+\end{lstlisting}
+
+The trackback\_rdf() tag is intentionally used within an HTML comment; it is not being ``turned off". The reason for this is that, otherwise, RDF breaks validation in non-XML documents, and in XHTML documents it is parsed incorrectly by most browsers.
+
+\subsection{Ending WordPress Loop}
+
+
+
+
+
+
+
+The following ends The Loop. After this, the various post-related template tags will not work as expected (or if they do, they will use the last post from The Loop). This means, that if you need to use a template tag that works within The Loop, you need to put it in before this point.
+
+\begin{lstlisting}[language=PHP]
+<?php endwhile; ?>
+\end{lstlisting}
+
+
+
+
+
+This section, immediately after the end of The Loop, displays navigation controls to move forward and backward by each web page. More information is available in function reference for posts\_nav\_link().
+
+\begin{lstlisting}[language=HTML]
+<div class="navigation">
+  <div class="alignleft"><?php previous_posts_link('&laquo; Previous Entries') ?></div>
+  <div class="alignright"><?php next_posts_link('Next Entries &raquo;','') ?></div>
+</div>
+\end{lstlisting}
+
+If the blog is set to display 10 posts per page, and the conditions used by The Loop collect 25 posts, there will be three pages to navigate: two pages of 10 posts each, and one page of 5 posts. The navigation links will allow the visitor to move forward and backward through the collection of posts.
+
+The navigation controls are included outside The Loop, but inside the if condition, so that they only show up if there are any posts. The navigation functions themselves also check whether or not there is anything to which they will link, based on the current Loop, and only display links if there's something to link.
+
+\begin{lstlisting}[language=PHP]
+<?php else : ?>
+<h2 class="center">Not Found</h2>
+<p class="center">
+  <?php _e("Sorry, but you are looking for something that isn't here."); ?>
+</p>
+\end{lstlisting}
+
+The else : clause determines what to do if have\_posts() (from way up at the top) is false. That is to say, the stuff after the else will only be executed/displayed if The Loop had zero posts. No posts show up if, for example, the visitor requested a specific day for which no posts were made or a search was performed that produced no results.
+
+\begin{lstlisting}[language=PHP]
+<?php endif; ?>
+\end{lstlisting}
+
+This ends the conditional test of "if there are posts do this, else if there are no posts, do that". Once the conditional test is finished, the default index.php template next includes the sidebar, and finally the footer.
+
+其他3个可以增加到日志中的元素有else、post ID和链接的 title 值。尽管它们是可选的，但是我们几乎可以在每一个主题中都能找到。
+
+\begin{lstlisting}[language=PHP]
+<?php if( have_posts() ) : ?>
+  <?php while( have_posts() ) : ?>
+    <?php the_post(); ?>
+    <?php the_title(); ?>
+    <?php the_content(); ?>
+  <?php endwhile; ?>
+<?php else : ?>
+  <?php _e('Not Found.'); ?>
+<?php endif; ?>    
+\end{lstlisting}
+
+\begin{compactenum}
+\item if(have\_posts()) 检查网站是否有文章；
+\item while(have\_posts()) 执行 the\_post() 去调用文章；
+\end{compactenum}
+
+\texttt{else}是当网站完全没有文章的时候执行的，当没有任何文章或者当找不到任何文章时，\texttt{else}语句告诉WordPress怎么处理，可以让WordPress显示错误信息Not Found，或者其他任何想要提示用户的信息。
+
+\texttt{while()}判断语句和\texttt{endwhile;}应该嵌套在\texttt{if()}和\texttt{else:}之间，所以\texttt{<?php else : ?>}应该在\texttt{<?php endwhile; ?>}之后。
+
+尽管错误信息不是真正的文章内容，但是我们其实可以把它当作文章来处理，于是\texttt{else}语句中需要显示的提示信息实际上也是在文章的位置，即：
+
+
+\begin{lstlisting}[language=PHP]
+<?php if( have_posts() ) : ?>
+  <?php while( have_posts() ) : the_post(); ?>
+    <div class="post">
+    <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+      <div class="entry"
+      <?php the_content(); ?>
+      </div>
+    </div>
+  <?php endwhile; ?>
+<?php else : ?>
+  <div class="post">
+  <?php _e('Not Found.'); ?>
+  </div>
+<?php endif; ?>    
+\end{lstlisting}
+
+其中，<div class="entry">把文章标题和文章内容区分开，而<div class="post">是把当前文章和其他文章区分开。
+
+在绝大多数的WordPress网站的底部，都会有下一页 (Next Page)或者上一页 (Previous Page) 这样的导航链接，可以通过 WordPress 的模板系统中的 posts\_nav\_link()函数调用这些链接。默认情况下，如果没有超过10篇文章的话，是不会显示导航链接的。
+
+也可以增加posts\_nav\_link()函数的参数，来分别给链接的中间，前面和后面的设置字符，如下所示：
+
+\begin{lstlisting}[language=PHP]
+<?php posts_nav_link('in between','before','after'); ?>
+\end{lstlisting}
+
+这里，第1个参数是显示在后一页和前一页链接的中间，第2个参数显示在前面，第3个参数显示在后面。
+
+
+
+
+
+
+
+\section{Sidebar Template}
+
+
+
+
+
+根据页面布局，sidebar尽量放在container的后面。通过创建id为sidebar的div，从而可以把侧边栏中的所有内容都放入其中。
+
+\begin{lstlisting}[language=HTML]
+<div id="container">
+...
+</div>
+<div id="sidebar"></div>
+\end{lstlisting}
+
+在<div id="sidebar"></div>中创建一个新的无序列表，然后增加一个列表元素（LI）到无序列表（UL）的中间并把一个子标题添加到这个列表中。
+
+\begin{lstlisting}[language=HTML]
+<div id="sidebar">
+  <ul>
+    <li><h2><?php _e('Categories'); ?></h2></li>
+    ...
+  </ul>
+</div>
+\end{lstlisting}
+
+Sidebar模板文件主要用于控制博客的页面列表、类别列表、存档列表、友情链接列表和其他一些列表。
+
+同样，WordPress主题系统特别用\texttt{get\_sidebar()}来导入sidebar.php文件的函数，而不用使用PHP的函数：
+
+\begin{lstlisting}[language=PHP]
+<?php include (TEMPLATEPATH . '/sidebar.php'); ?>.
+\end{lstlisting}
+
+
+\subsection{Categories}
+
+调用wp\_list\_cats()函数在列表条目中添加分类链接列表的代码如下：
+
+
+\begin{lstlisting}[language=HTML]
+<div id="sidebar">
+  <ul>
+    <li><h2><?php _e('Categories'); ?></h2></li>
+    <li>
+      <ul>
+      <?php wp_list_cats('sort_column=name&optioncount=1&hierarchical=0'); ?>
+      </ul>
+    </li>
+    ...
+  </ul>
+</div>
+\end{lstlisting}
+
+其中：
+
+\begin{compactitem}
+\item sort\_column=name – 把分类按字符顺序排列
+\item optioncount=1 – 显示每个分类含有的日志数
+\item hierarchial=0 – 不按照层式结构显示子分类，这就解释了为什么子分类链接是列在列表中第一级。
+\item \& – 每次增加另一个参数的时候，需在它之前要输入 \& 用来把和现有的参数区分开，例如 \& 在 sort\_column 和 optioncount之间。
+
+\end{compactitem}
+
+
+
+WordPress中默认的分类是Uncategorized，如果没有把文章发布到多个分类下面，那么链接列表应该是只有一个链接 Uncategorized。
+
+至于为什么不把 <?php wp\_list\_cats(); ?> 放入<li> 和 </li> 标签中，是因为当我们使用 wp\_list\_cats() 这个函数调用链接列表函数后，它会自动附上一组 <li> 和 </li>（列表条目）标签在每个链接的左右。
+
+
+接下来，在分类链接上面添加以下代码：
+
+
+\begin{lstlisting}[language=HTML]
+<div id="sidebar">
+  <ul>
+    <?php wp_list_pages(); ?>
+    <li><h2><?php _e('Categories'); ?></h2></li>
+    <li>
+      <ul>
+      <?php wp_list_cats('sort_column=name&optioncount=1&hierarchical=0'); ?>
+      </ul>
+    </li>
+    ...
+  </ul>
+</div>
+\end{lstlisting}
+
+在默认情况下只有一个页面链接，就是 About 链接。 
+
+\subsection{Pages}
+
+添加\texttt{'title\_li=<h2>Pages</h2>'}到 wp\_list\_pages() 作为参数，可以使“Pages”列表标题和“Categories”分类链接标题的大小一致。这里，\texttt{title\_li}是一个用来定制化页面链接列表的标题的参数，而\texttt{<h2>Pages</h2>}是\texttt{title\_li}这个参数的值。
+
+\begin{lstlisting}[language=HTML]
+<div id="sidebar">
+  <ul>
+    <?php wp_list_pages('title_li=<h2>Pages</h2>'); ?>
+    <li><h2><?php _e('Categories'); ?></h2></li>
+    <li>
+      <ul>
+      <?php wp_list_cats('sort_column=name&optioncount=1&hierarchical=0'); ?>
+      </ul>
+    </li>
+    ...
+  </ul>
+</div>
+\end{lstlisting}
+
+如果因为布局或者设计的原因，不能在侧边栏处理那么多级别的链接。为了限制显示列表的层数，增加了 depth 这个参数，并把它设置为 3：
+
+\begin{lstlisting}[language=HTML]
+<div id="sidebar">
+  <ul>
+    <?php wp_list_pages('depth=3&title_li=<h2>Pages</h2>'); ?>
+    <li><h2><?php _e('Categories'); ?></h2></li>
+    <li>
+      <ul>
+      <?php wp_list_cats('sort_column=name&optioncount=1&hierarchical=0'); ?>
+      </ul>
+    </li>
+    ...
+  </ul>
+</div>
+\end{lstlisting}
+
+这个 \& 在这儿用于把 depth 和 title\_li 这两个参数区分开。如果只有一个About页面链接，将不会注意有什么不同。
+
+\subsection{Archives}
+
+在侧边栏区域的 Categories 列表下面输入以下代码：
+
+\begin{lstlisting}[language=HTML]
+<div id="sidebar">
+  <ul>
+    <?php wp_list_pages(); ?>
+    <li><h2><?php _e('Categories'); ?></h2>
+      <ul>
+      <?php wp_list_cats('sort_column=name&optioncount=1&hierarchical=0'); ?>
+      </ul>
+    </li>
+    <li><h2><?php _e('Archives'); ?></h2>
+      <ul>
+        <?php wp_get_archives('type=monthly'); ?>
+      </ul>
+    </li>
+    ...
+  </ul>
+</div>
+\end{lstlisting}
+
+wp\_get\_arhives()函数中使用了type参数以及monthly作为它的值，这样就可以按月调用存档链接列表，并把每个链接放入 <li> 和 </li> 标签中。
+
+\subsection{Blogroll}
+
+在存档链接列表下使用get\_links\_list()函数，可以获得友情链接列表，具体代码如下：
+
+\begin{lstlisting}[language=HTML]
+<div id="sidebar">
+  <ul>
+    <?php wp_list_pages(); ?>
+    <li><h2><?php _e('Categories'); ?></h2>
+      <ul>
+      <?php wp_list_cats('sort_column=name&optioncount=1&hierarchical=0'); ?>
+      </ul>
+    </li>
+    <li><h2><?php _e('Archives'); ?></h2>
+      <ul>
+        <?php wp_get_archives('type=monthly'); ?>
+      </ul>
+    </li>
+    <li><h2><?php _e('Pages'); ?></h2>
+      <ul>
+        <?php get_links_list(); ?>
+      </ul>
+    </li>
+    ...
+  </ul>
+</div>
+\end{lstlisting}
+
+
+\subsection{Search Form}
+
+在 index.php 文件，在侧边栏的最顶部输入以下代码：
+
+\begin{lstlisting}[language=HTML]
+<div id="sidebar">
+  <ul>
+    <li id="search">
+      <?php include(TEMPLATEPATH . '/search.php')?>
+    </li>
+    <?php wp_list_pages(); ?>
+    <li><h2><?php _e('Categories'); ?></h2>
+      <ul>
+      <?php wp_list_cats('sort_column=name&optioncount=1&hierarchical=0'); ?>
+      </ul>
+    </li>
+    <li><h2><?php _e('Archives'); ?></h2>
+      <ul>
+        <?php wp_get_archives('type=monthly'); ?>
+      </ul>
+    </li>
+    <li><h2><?php _e('Pages'); ?></h2>
+      <ul>
+        <?php get_links_list(); ?>
+      </ul>
+    </li>
+    ...
+  </ul>
+</div>
+\end{lstlisting}
+
+include()可以导入任何想要导入的文件，这和使用WordPress模板函数去调用模板文件是不同的，因为include()只是简单导入已经存在的文件，这里是调用在 search.php文件中的代码。被导入的信息应该在一个网站上基本不会被改变的。
+
+include()中的参数TEMPLATEPATH指的是主题文件夹的位置，在 TEMPLATEPATH 和 “/search.php” 中间的点把它们连接起来，最终得到要导入的文件的地址。
+
+搜索框不像分类、归档、页面或者 Blogroll 一样有子标题。当然也可以给它一个子标题。
+
+
+\subsection{Calendar}
+
+使用 get\_calendar()函数可以调用日历，在搜索框或者页面链接列表下面输入以下代码：
+
+
+\begin{lstlisting}[language=HTML]
+<div id="sidebar">
+  <ul>
+    <li id="search">
+      <?php include(TEMPLATEPATH . '/search.php')?>
+    </li>
+    <li id="calendar"><h2><?php _e('Calendar'); ?></h2>
+      <?php get_calendar(); ?>
+    </li>
+    <?php wp_list_pages(); ?>
+    <li><h2><?php _e('Categories'); ?></h2>
+      <ul>
+      <?php wp_list_cats('sort_column=name&optioncount=1&hierarchical=0'); ?>
+      </ul>
+    </li>
+    <li><h2><?php _e('Archives'); ?></h2>
+      <ul>
+        <?php wp_get_archives('type=monthly'); ?>
+      </ul>
+    </li>
+    <li><h2><?php _e('Pages'); ?></h2>
+      <ul>
+        <?php get_links_list(); ?>
+      </ul>
+    </li>
+    ...
+  </ul>
+</div>
+\end{lstlisting}
+
+
+\subsection{Meta}
+
+在WordPress中，wp\_register() 这个函数能产生一组 <li> 和 </li> 标签，如果用户没有登录，它显示注册（Register）链接，如果登录了，它显示的是站点管理（Site Admin）的链接。
+
+wp\_loginout() 不会产生列表元素标签，所以需要我们手工输入列表元素标签，当没有登录的时候，得到的是登录（Login）的链接，当已经登录的时候，得到的是登出（Logout）链接。
+
+
+\begin{lstlisting}[language=HTML]
+<div id="sidebar">
+  <ul>
+    <li id="search">
+      <?php include(TEMPLATEPATH . '/search.php')?>
+    </li>
+    <li id="calendar"><h2><?php _e('Calendar'); ?></h2>
+      <?php get_calendar(); ?>
+    </li>
+    <?php wp_list_pages(); ?>
+    <li><h2><?php _e('Categories'); ?></h2>
+      <ul>
+      <?php wp_list_cats('sort_column=name&optioncount=1&hierarchical=0'); ?>
+      </ul>
+    </li>
+    <li><h2><?php _e('Archives'); ?></h2>
+      <ul>
+        <?php wp_get_archives('type=monthly'); ?>
+      </ul>
+    </li>
+    <li><h2><?php _e('Pages'); ?></h2>
+      <ul>
+        <?php get_links_list(); ?>
+        <li><h2><?php _e('Meta'); ?></h2>
+          <ul>
+            <?php wp_register(); ?>
+            <li><?php logout(); ?>
+            <?php wp_meta(); ?>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    ...
+  </ul>
+</div>
+\end{lstlisting}
+
+到目前为止，wp\_meta() 没有做任何事情，它在网页上和源代码中都不会产生内容，现在不用考虑 wp\_meta()，实际上我们已经在使用它了。
+
+
+\section{Widget Template}
+
+一个支持 Widget 的侧边栏或者说是窗体化（widgetized）的侧边栏几乎是 WordPress 主题的标准。
+
+简单的说，窗体化就是能够通过拖拉就能够整理侧边栏的模块。比如要更改分类和存档的位置，只需要简单把分类和存档列表拖到它们的位置即可，根本不用去修改侧边栏的代码。
+
+
+\begin{lstlisting}[language=HTML]
+<div id="sidebar">
+  <ul>
+    <?php if(function_exists('dynamic_sidebar')&&dynamic_sidebar()): else : ?>
+    <li id="search">
+      <?php include(TEMPLATEPATH . '/search.php')?>
+    </li>
+    <li id="calendar"><h2><?php _e('Calendar'); ?></h2>
+      <?php get_calendar(); ?>
+    </li>
+    <?php wp_list_pages(); ?>
+    <li><h2><?php _e('Categories'); ?></h2>
+      <ul>
+      <?php wp_list_cats('sort_column=name&optioncount=1&hierarchical=0'); ?>
+      </ul>
+    </li>
+    <li><h2><?php _e('Archives'); ?></h2>
+      <ul>
+        <?php wp_get_archives('type=monthly'); ?>
+      </ul>
+    </li>
+    <li><h2><?php _e('Pages'); ?></h2>
+      <ul>
+        <?php get_links_list(); ?>
+        <li><h2><?php _e('Meta'); ?></h2>
+          <ul>
+            <?php wp_register(); ?>
+            <li><?php logout(); ?>
+            <?php wp_meta(); ?>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    ...
+    <?php endif; ?>
+  </ul>
+</div>
+\end{lstlisting}
+
+这样就可以在WordPress 后台 - 外观 - Widget把 Widget 拖到侧边栏了。
+
+\section{Foot Template}
+
+Footer部分通常只是包含一些版权信息，当然也可以加入一些其他的复杂的逻辑。
+
+Footer模板文件footer.php 通常不会因为页面的改变而改变，可以在这里放置任何东西，但是通常是版权信息。
+
+最后，WordPress主题系统使用\texttt{get\_footer()}来导入footer.php文件的函数，而不用使用PHP的函数：
+
+\begin{lstlisting}[language=PHP]
+<?php include (TEMPLATEPATH . '/footer.php'); ?>.
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+\chapter{The Loop In Other Templates}
+
+WordPress can use different template files for displaying your blog in different ways. In the default WordPress theme, there are template files for the index view, category view, and archive view, as well as a template for viewing individual posts. Each of these uses The Loop, but does so with slightly different formatting, as well as different uses of template tags.
+
+For any view which does not have a separate template file, WordPress will use index.php by default. If a visitor requests a single post, WordPress will first look for a file named single.php. If that file exists, it will be used to present the post to the visitor. If that file does not exist, WordPress will use index.php to present the post to the visitor. This is called the Template Hierarchy.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.7]{wp_hierarchy.pdf}
+\caption{WordPress~Template~Hierarchy}
+\end{figure}
+
+If you are making your own Theme, it's often helpful to look at the template files from the default Theme as a point of reference. It's also helpful to use your theme's index.php as a template for your other template files. Doing so may give you a known and working page from which to begin making changes as you create more template files.
+
+WordPress会用不同的模版文件使得博客的显示方式多彩多样。在默认的WordPress主题中，利用 template files 的主页视图、分类视图以及存档视图来作为显示单独文章的模版。 
+
+每个使用The Loop的模版都采用了稍微不同的样式，这需要参考 template tags的不同用法。
+
+
+对于没有独立模板的任何视图，WordPress默认使用index.php作为默认模板。如果访问者请求了一个单独的文章，WordPress会首先查找一个名为single.php的文件，如果这个文件存在，它将会被用来准备显示文章给访问者。如果single.php不存在，WordPress将使用index.php来显示文章给访问者，这称为模板层次。
+
+
+
+
+
+
+
+如果在制作自己的主题，从默认主题中查看模板文件的情况是很有帮助的。这对于在自己的主题中将index.php作为其他模板的模板也是很有用的，这样做的话可以得到更多的模板页，从而最终可以得到一些可知并且可用的页面。
+
+\section{Different Archive Format}
+
+An archive is a collection of historical posts. In the default usage, the posts displayed on your main index are recent chronological postings. When a visitor clicks on one of your archive links, or if they manually request a specific date (http://www.example.com/blog/index.php?m=200504 or http://www.example.com/blog/2005/04 to select all posts from April, 2005), WordPress will display an archive view. By default, the archive will use index.php, and thus look the same as your front page, just displaying the posts from April 2005.
+
+
+
+When WordPress prepares an archive view for a visitor, it specifically looks for a file named archive.php in your current theme's directory. If you'd like to visually disambiguate archives from your front page, simply copy index.php to archive.php, and edit archive.php as necessary!
+
+For example, if you want to show only post titles, and no post content, for your list of archives, you could use something like this:
+
+\begin{lstlisting}[language=PHP]
+<?php get_header(); ?>
+<div id="content" class="narrowcolumn">
+  <?php if(have_posts()): ?>
+    <?php while(have_posts()): the_post(); ?>
+    <div class="post">
+      <h2 id="post-<?php the_ID(); ?>">
+      <a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent link to <?php the_title(); ?>"><?php the_title(); ?></a>
+      </h2>
+      <small><?php the_time('F jS, Y')?><!-- by <?php the_author() ?> --></small>
+    </div>
+    <?php endwhile; ?>
+    <div class="navigation">
+      <div class="alignleft">
+        <?php posts_nav_link(' ', ' ','&laquo; Pervious Entries') ?>
+      </div>
+      <div class="alignright">
+        <?php posts_nav_link(' ','Next Entries &raquo;',' ') ?>
+      </div>
+    </div>
+  <?php else:?>
+  <h2 class="center">Not Found</h2>
+  <p class="center"><?php _e("Sorry, but you are looking for something that isn't here."); ?></p>
+  <?php endif; ?>
+</div>
+<?php get_siderbar(); ?>
+<?php get_footer(); ?>
+\end{lstlisting}
+
+\section{Different Category Format}
+
+Like the archive views, WordPress looks for a separate template file for category views. If a visitor clicks on a link for a category in your blog, they will be taken to the category view. WordPress will prepare The Loop with posts from that category only, limiting the number of posts per the blog's default settings.
+
+To make your category view different from your index view, copy index.php and rename it category.php. For a category view, it's probably not necessary to list the categories to which a post is assigned, so let's remove that portion. Instead, let's announce the category at the top of the page:
+
+\begin{lstlisting}[language=PHP]
+	<?php get header(); ?>
+	<div id="content" class="narrowcolumn">
+	<p>
+	<strong>
+		<?php single_cat_title('Currently browsing '); ?>
+	</strong><br />
+	<?php echo category_decription(); ?>
+	</p>
+	<?php if(have_posts()): ?>
+		<?php while(have_posts()): the_post(); ?>
+		<div class="post">
+			<h2 id="post-<?php the_ID(); ?>">
+			<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent link to <?php the_title(); ?>">
+			<?php the_title(); ?></a></h2>
+			<small>
+			<?php the_time('F jS, Y') ?>
+				<!-- by <?php the_author() ?> -->
+			</small>
+		</div>
+		<?php endwhile;?>
+		<div class="navigation">
+			<div class="alignleft">
+			<?php posts_nav_link(' ', ' ', '&laquo; Previous Entries ') ?>
+			</div>
+			<div class="alignright">
+			<?php post_nav_link(' ', 'Next Entries &raquo;', ' ') ?>
+			</div>
+		</div>
+	<?php else: ?>
+	<h2 class="center">Not Found</h2>
+	<p class="center"><?php _e("Sorry, but you are looking for something that isn't here."); ?></p>
+	<?php endif; ?>
+	</div>
+	<?php get_sidebar(); ?>
+	<?php get_footer(); ?>
+\end{lstlisting}
+
+\section{Different Formats for Different Categories}
+
+As explained in the Template Hierarchy, it is possible to create separate template files for each category. Simply name the file category-\underline{X}.php, where \underline{X} is the numerical ID of the category. Consider carefully whether you need a whole new template for a specific category.
+
+Let's look at two categories, "Plants" and "Flowers", with category IDs 3 and 4, respectively. Next to each post title in the output you want to have picture of either a plant, or a flower, depending on which category is being displayed. You could:
+\begin{compactitem}
+\item Use two separate files, category-3.php and category-4.php, each with a different img tag for each post title.
+\item Use a conditional test inside your default category.php file to check whether the current category is "Plants" or "Flowers" (or neither), and display the appropriate image:
+
+\begin{lstlisting}[language=PHP]
+	<?php if(is_category('3') ): 
+	// we're in the Plants category, so show a plant ?>
+	<img src="/images/plant.png" alt='a plant' />
+	<?php elseif(is_category('4')):
+	// we're in the Flowers category, so show a flower ?>
+	<img src="/images/flower.png" alt='a pretty flower' />
+	<?php endif; 
+	// end the if, no images for other categories ?>
+\end{lstlisting}
+\end{compactitem}
+
+If you added another category, "Cars", which you wanted to display in a significantly different way, then a separate category-\underline{X}.php would be more appropriate.
+
+\section{Different CSS For Different Categories}
+
+
+Many users want to create separate CSS files for a specific category. This, too, can be easily accomplished. It is important to remember that stylesheets are defined and loaded in the <head> section of the HTML document. WordPress uses the header.php file for this. In the default header.php, find this line:
+
+\begin{lstlisting}[language=HTML]
+	<link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
+\end{lstlisting}
+
+And change it to something like this:
+
+\begin{lstlisting}[language=PHP]
+	<?php if ( is_category('5') ) { // Load special CSS for "Cars" category ?>
+		<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/category-5.css" type="text/css" media="screen" />;
+	<?php } else { ?>
+		<link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
+	<?php } ?>
+\end{lstlisting}
+
+Note: The Cars template uses the category-5.css file to override the default layout. In this example the CSS file is named after the category template file to which it will be applied, rather than the actual name of the category. Thus, you know that category-5.css goes with category-5.php.
+
+\section{Different Single Post Format}
+
+When viewing any single post (or permalink), WordPress will use single.php, if present.
+
+This portion, from the WordPress default single.php, provides the post meta data information about the current post:
+
+\begin{lstlisting}[language=HTML]
+	<p class="postmetadata alt">
+	<small>
+	This entry was posted on <?php the_time('l, F jS, Y') ?> at <?php the_time() ?> 
+	and is filed under <?php the_category(', ') ?>.
+	You can follow any responses to this entry through 
+	the <?php comments_rss_link('RSS 2.0'); ?> feed.
+	<?php
+	if ( comments_open() && pings_open() ) {
+	// Both Comments and Pings are open
+	?>
+	You can <a href="#respond">leave a response</a>, or 
+	<a href="<?php trackback_url(display); ?>">trackback</a> 
+	from your own site.
+	<?php 
+	} elseif ( !comments_open() && pings_open() ) {
+	// Only Pings are Open 
+	?>
+	Responses are currently closed, but you can 
+	<a href="<?php trackback_url(display); ?> ">trackback</a> 
+	from your own site.
+	<?php
+	} elseif ( comments_open() && !pings_open() ) { 
+	// Comments are open, Pings are not 
+	?>
+	You can skip to the end and leave a response. Pinging is currently not allowed.
+	<?php
+	} else { 
+	// Neither Comments, nor Pings are open 
+	?>
+	Both comments and pings are currently closed.
+	<?php 
+	} 
+	edit_post_link('Edit this entry.','',''); ?>
+	</small>
+	</p>
+\end{lstlisting}
+
+This sort of information -- whether comments are open or closed -- is largely inappropriate on an index, archive, or category view; which is why it's only included in the single.php template file.
+
+\section{The Loop Tricks}
+
+Now that you have a good introduction to the basic uses for the WordPress Loop, let's introduce you to some more Loop effects and tricks.
+
+\subsection{Static Front Page}
+
+How can you display something special only on the front page of your blog? That's right, only on the front page or home page, and have it not be seen anywhere else on your site. Easy! We call this the static front page. The front or first page of your site isn't really static. It's just using the Loop to make it look that way.
+
+To make this Loop trick work, use the is\_home() conditional template tag function.
+
+In your index.php, use an if() test to conditionally output additional content:
+
+\begin{lstlisting}[language=PHP]
+	<?php get_header(); ?>
+	<?php if(is_home()) { 
+		// we're on the homepage, so let's show a picture of new kitten!
+		echo "<img src='/images/new_kitty.jpg' alt='Our new cat, Rufus!' />";
+		// and now back to our regularly scheduled homepage	
+	} ?>
+\end{lstlisting}
+
+The function is\_home() will only produce a true value if the visitor is not requesting a specific post, page, category, or date, so it only shows up on the "home" page.
+
+For more information, see \href{http://codex.wordpress.org/Creating_a_Static_Front_Page}{Creating a Static Front Page}.
+
+
+\subsection{Excerpts Only}
+
+The easiest way to display excerpts, instead of the full content, of posts, replace all instances of the\_content() with the\_excerpt(). If you have not created explicit excerpts for your posts, this function will automatically display the first 55 words of the post.
+
+\begin{lstlisting}[language=HTML]
+	<div class="entry">
+		<?php the_excerpt(); ?>
+	</div>
+\end{lstlisting}
+
+\subsection{Showing Excerpts or Full Post Depending Upon Number of Posts}
+
+In some circumstances, for example on archive pages, you may want to show the full post if there is only one post or excerpts if there are multiple posts. You can customize the loop to do this.
+
+\begin{lstlisting}[language=PHP]
+	<?php if (have_posts()) : ?>
+	  <?php if (($wp_query->post_count) > 1) : ?>
+	     <?php while (have_posts()) : the_post(); ?>
+	       <!-- Do your post header stuff here for excerpts-->
+	          <?php the_excerpt() ?>
+	       <!-- Do your post footer stuff here for excerpts-->
+	     <?php endwhile; ?>
+	  <?php else : ?>
+	     <?php while (have_posts()) : the_post(); ?>
+	       <!-- Do your post header stuff here for single post-->
+	          <?php the_content() ?>
+	       <!-- Do your post footer stuff here for single post-->
+	     <?php endwhile; ?>
+	  <?php endif; ?>
+	<?php else : ?>
+	     <!-- Stuff to do if there are no posts-->
+	<?php endif; ?>
+\end{lstlisting}
+
+\subsection{Different Headers/Sidebars/Footers}
+
+WordPress offers the get\_header(), get\_sidebar(), and get\_footer() Include Tags for use in your template files. These functions make it easy to define a standard header/sidebar/footer which is easily editable. Any changes made to these files will immediately be made visible to viewers, without any work on your part.
+
+But sometimes you might not want a sidebar. If you don't want a sidebar, simply exclude the call to the get\_sidebar() function from your template. For example, the single.php template in the WordPress default theme does not include a sidebar.
+
+To create your own different sidebar, you have two choices:
+
+\begin{compactitem}
+\item Include the sidebar contents directly into the template file on which you're working. If you want category-3 to have a different sidebar, edit category-3.php and include the necessary HTML and PHP to generate your distinctive sidebar.
+\item Use the PHP include function, to include another file. The WordPress get\_sidebar() function only loads sidebar.php. If you make a file named sideleft.php, you would include it like this:
+
+\begin{lstlisting}[language=PHP]
+	<?php include(TEMPLATEPATH . '/sideleft.php'); ?>
+\end{lstlisting}
+
+\end{compactitem}
+
+In WordPress Version 2.5 and above you can also call a sidebar like this:
+
+\begin{lstlisting}[language=PHP]
+	<?php get_sidebar('right'); ?>
+\end{lstlisting}
+
+This causes the template TEMPLATEPATH . 'sidebar-right.php' to be included.
+
+Using the WordPress default Template Hierarchy, if you want to use the same elements on multiple or different templates, it's probably best to put them in separate template files and use the PHP include() function. If the element you're adding is specifically for one template file, it's probably best to include it directly in that template file.
+
+We've just scratched the surface of what can be done with the Loop. As a reminder, the following are resources that will help you customize your own WordPress Loop.
+
+
+
+
+
+\section{Using The Loop}
+
+
+The Loop should be placed in index.php and in any other Templates used to display post information.
+
+Be sure to include the call for the header template at the top of your Theme's templates. If you are using The Loop inside your own design (and your own design is not a template), set WP\_USE\_THEMES to false:
+
+\begin{lstlisting}[language=PHP]
+	<?php define('WP_USE_THEMES', false); get_header(); ?>
+\end{lstlisting}
+
+The loop starts here:
+
+循环从这里开始：
+
+\begin{lstlisting}[language=PHP]
+	<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+\end{lstlisting}
+
+and ends here:
+
+在这里结束：
+
+\begin{lstlisting}[language=PHP]
+	<?php endwhile; else: ?>
+	<p><?php _e('Sorry, no posts matched your criteria.'); ?></p>
+	<?php endif; ?>
+\end{lstlisting}
+
+This is using PHP's alternative syntax for control structures, and could also be expressed as:
+
+\begin{lstlisting}[language=PHP]
+	<?php 
+		if ( have_posts() ) {
+			while ( have_posts() ) {
+				the_post(); 
+				//
+				// Post Content here
+				//
+			} // end while
+		} // end if
+	?>
+\end{lstlisting}
+
+\subsection{Style Posts From Some Category Differently}
+
+This example displays each post with its Title (which is used as a link to the Post's Permalink), Categories, and Content. It also allows posts in a category with Category ID '3' to be styled differently. To accomplish this, the in\_category() Template Tag is used. Read the comments carefully to see what each part of the code is doing.
+
+\begin{lstlisting}[language=PHP]
+	<!-- Start the Loop. -->
+	<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+	
+	<!-- Test if the current post is in category 3. -->
+	<!-- If it is, the div box is given the CSS class "post-cat-three". -->
+	<!-- Otherwise, the div box is given the CSS class "post". -->
+	
+	<?php if ( in_category('3') ) { ?>
+		<div class="post-cat-three">
+	<?php } else { ?>
+		<div class="post">
+	<?php } ?>
+	
+	<!-- Display the Title as a link to the Post's permalink. -->
+	
+	<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+		
+	<!-- Display the date (November 16th, 2009 format) and a link to other posts by this posts author. -->
+	<small><?php the_time('F jS, Y') ?> by <?php the_author_posts_link() ?></small>
+	
+	<!-- Display the Post's content in a div box. -->
+	
+	<div class="entry">
+		<?php the_content(); ?>
+	</div>
+	
+	<!-- Display a comma separated list of the Post's Categories. -->
+	
+	<p class="postmetadata">Posted in <?php the_category(', '); ?></p>
+	</div> <!-- closes the first div box -->
+	
+	<!-- Stop The Loop (but note the "else:" - see next line). -->
+	
+	<?php endwhile; else: ?>
+	
+	<!-- The very first "if" tested to see if there were any Posts to -->
+	<!-- display.  This "else" part tells what do if there weren't any. -->
+	<p>Sorry, no posts matched your criteria.</p>
+	
+	<!-- REALLY stop The Loop. -->
+	<?php endif; ?>
+\end{lstlisting}
+
+
+
+Note: All HTML code must be outside the <?php  ?> tags. And, PHP code (even things as simple as curly braces: \}{}) must be inside the <?php  ?> tags. You can start and stop blocks of PHP code to intersperse HTML code within if and else statements, as shown in the above example.
+
+\subsection{Exclude Posts From Some Category}
+
+This example demonstrates how to hide a specific Category or Categories from being displayed. In this case, posts from Categories 3 and 8 are excluded. The example is different than the example above in that it makes a change to the query itself.
+
+\begin{lstlisting}[language=PHP]
+	<?php query_posts($query_string . '&cat=-3,-8'); ?>
+	<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+	
+	<div class="post">
+	 
+	<!-- Display the Title as a link to the Post's permalink. -->
+	<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+	
+	<!-- Display the date (November 16th, 2009 format) and a link to other posts by this posts author. -->
+	<small><?php the_time('F jS, Y') ?> by <?php the_author_posts_link() ?></small>
+	 
+	<div class="entry">
+		<?php the_content(); ?>
+	</div>
+	
+	<p class="postmetadata">Posted in <?php the_category(', '); ?></p>
+	</div> <!-- closes the first div box -->
+	
+	<?php endwhile; else: ?>
+	<p>Sorry, no posts matched your criteria.</p>
+	<?php endif; ?>
+\end{lstlisting}
+
+Note: If you use this example for your main page, you should use a different Template for your Category archives, otherwise, WordPress will exclude all posts in Category 3, even when viewing that Category Archive! However, if you want to use the same template file, you can avoid this by using the is\_home() tag to ensure posts from Category 3 will only be excluded from the main page:
+
+\begin{lstlisting}[language=PHP]
+	...
+	<?php if ( is_home() ) {
+	query_posts($query_string . '&cat=-3');
+	}
+	?>
+	...
+\end{lstlisting}
+
+There are other Conditional Tags that can be used to control the output depending on whether or not a particular condition is true with respect to the requested page.
+
+\subsection{Multiple Loops}
+
+This section deals with advanced use of The Loop. It's a bit technical – but don’t let that scare you. We’ll start off at easy and work up from there. With a little common sense, patience, and enthusiasm, you too can do multiple loops.
+
+First off, "why would one want to use multiple loops?" In general, the answer is that you might want to do something with one group of posts, and do something different to another group of posts, but display both groups on the same page. Something could mean almost anything; you are only limited by your PHP skill and your imagination.
+
+We will get into examples below, but first you should read about the basics. Take a look at the basic Loop. It consists of:
+
+\begin{lstlisting}[language=PHP]
+	<?php if (have_posts()) : ?>
+		<?php while (have_posts()) : the_post(); ?>    
+		<!-- do stuff ... -->
+		<?php endwhile; ?>
+	<?php endif; ?>
+\end{lstlisting}
+
+In English (PHP types and people familiar with code speak can skip to below), the above would be read: If we are going to be displaying posts, then get them, one at a time. For each post in the list, display it according to <!-- do stuff ... -->. When you hit the last post, stop. The do stuff line(s), are template dependent.
+
+A little aside on Do stuff: in this example it is simply a placeholder for a bunch of code that determines how to format and display each post on a page. This code can change depending on how you want your WordPress to look. If you look at the Kubrick theme’s index.php the do stuff section would be everything below:
+
+\begin{lstlisting}[language=PHP]
+	<?php while (have_posts()) : the_post(); ?>
+\end{lstlisting}
+
+To above:
+
+\begin{lstlisting}[language=PHP]
+	<?php comments_popup_link('No Comments »', '1 Comment »', '% Comments »'); ?>
+\end{lstlisting}
+
+An explanation for the coders out there: The have\_posts() and the\_post() are convenience wrappers around the global \$wp\_query object, which is where all of the action is. The \$wp\_query is called in the blog header and fed query arguments coming in through GET and PATH\_INFO. The \$wp\_query takes the arguments and builds and executes a DB query that results in an array of posts. This array is stored in the object and also returned back to the blog header where it is stuffed into the global \$posts array (for backward compatibility with old post loops).
+
+Once WordPress has finished loading the blog header and is descending into the template, we arrive at our post Loop. The have\_posts() simply calls into \$wp\_query -> have\_posts() which checks a loop counter to see if there are any posts left in the post array. And the\_post() calls \$wp\_query -> the\_post() which advances the loop counter and sets up the global \$post variable as well as all of the global post data. Once we have exhausted the loop, have\_posts() will return false and we are done.
+
+
+Below are three examples of using multiple loops. The key to using multiple loops is that \$wp\_query can only be called once. In order to get around this it is possible to re-use the query by calling rewind\_posts() or by creating a new query object. This is covered in example 1. In example 2, using a variable to store the results of a query is covered. Finally, `multiple loops in action' brings a bunch of ideas together to document one way of using multiple loops to promote posts of a certain category on your blog’s homepage.
+
+
+
+In order to loop through the same query a second time, call rewind\_posts(). This will reset the loop counter and allow you to do another loop.
+
+
+\begin{lstlisting}[language=PHP]
+	<?php rewind_posts(); ?>
+	 
+	<?php while (have_posts()) : the_post(); ?>
+		<!-- Do stuff... -->
+	<?php endwhile; ?>
+\end{lstlisting}
+
+If you are finished with the posts in the original query, and you want to use a different query, you can reuse the \$wp\_query object by calling query\_posts() and then looping back through. The query\_posts() will perform a new query, build a new posts array, and reset the loop counter.
+
+\begin{lstlisting}[language=PHP]
+  // Get the last 10 posts in the special_cat category.
+  <?php query_posts('category_name=special_cat&posts_per_page=10'); ?>
+
+  <?php while (have_posts()) : the_post(); ?>
+    <!-- Do special_cat stuff... -->
+  <?php endwhile;?>
+\end[lstlisting}
+
+If you need to keep the original query around, you can create a new query object.
+
+
+\begin{lstlisting}[language=PHP]
+	<?php $my_query = new WP_Query('category_name=special_cat&posts_per_page=10'); ?>
+	
+	<?php while ($my_query->have_posts()) : $my_query->the_post(); ?>
+		<!-- Do special_cat stuff... -->
+	<?php endwhile; ?>
+\end{lstlisting}
+
+The query object my\_query is used because you cannot use the global have\_posts() and the\_post() since they both use \$wp\_query. Instead, call into your new \$my\_query object.
+
+Another version of using multiple Loops takes another tack for getting around the inability to use have\_posts() and the\_post(). To solve this, you need to store the original query in a variable, then re-assign it with the other Loop. This way, you can use all the standard functions that rely on all the globals.
+
+For example:
+
+\begin{lstlisting}[language=PHP]
+	// going off on my own here
+	<?php $temp_query = $wp_query; ?>
+	<!-- Do stuff... -->
+	
+	<?php query_posts('category_name=special_cat&posts_per_page=10'); ?>
+	
+	<?php while (have_posts()) : the_post(); ?>
+	  <!-- Do special_cat stuff... -->
+	<?php endwhile; ?>
+	
+	// now back to our regularly scheduled programming
+	<?php $wp_query = $temp_query; ?>
+\end{lstlisting}
+
+Note: In PHP 5, objects are referenced with the "= clone" operator instead of "=" like in PHP 4. To make Example above work in PHP 5 you need to use the following code:
+
+\begin{lstlisting}[language=PHP]
+	// going off on my own here
+	<?php $temp_query = clone $wp_query; ?>
+	<!-- Do stuff... -->
+	 
+	<?php query_posts('category_name=special_cat&posts_per_page=10'); ?>
+	 
+	<?php while (have_posts()) : the_post(); ?>
+		<!-- Do special_cat stuff... -->
+	<?php endwhile; ?>
+	<?php endif; ?>
+	 
+	// now back to our regularly scheduled programming
+	<?php $wp_query = clone $temp_query; ?>
+\end{lstlisting}
+
+However, this second example does not work in WordPress 2.1.
+
+\subsection{Multiple Loops in Action}
+
+The best way to understand how to use multiple loops is to actually show an example of its use. Perhaps the most common use of multiple loops is to show two (or more) lists of posts on one page. This is often done when a webmaster wants to feature not only the very latest post written, but also posts from a certain category.
+
+Leaving all formatting and CSS issues aside, let us assume we want to have two lists of posts. One which would list the most recent posts (the standard 10 posts most recently added), and another which would contain only one post from the category ‘featured’. Posts in the ‘featured’ category should be shown first, followed by the second listing of posts (the standard). The catch is that no post should appear in both categories.
+
+\begin{compactenum}
+\item Step 1. Get only one post from the ‘featured’ category.
+
+\begin{lstlisting}[language=PHP]
+	<?php $my_query = new WP_Query('category_name=featured&posts_per_page=1');
+	while ($my_query->have_posts()) : $my_query->the_post();
+	$do_not_duplicate = $post->ID; ?>
+		<!-- Do stuff... -->
+	<?php endwhile; ?>
+\end{lstlisting}
+
+In English the above code would read:
+
+Set \$my\_query equal to the result of querying all posts where the category is named featured and by the way, get me one post only. Also, set the variable \$do\_not\_duplicate equal to the ID number of the single post returned. Recall that the Do stuff line represents all the formatting options associated for the post retrieved.
+
+Note that we will need the value of \$do\_not\_duplicate in the next step to ensure that the same post doesn't appear in both lists.
+
+\item Step 2. The second loop, get the X latest posts (except one).
+
+The following code gets X recent posts (as defined in WordPress preferences) save the one already displayed from the first loop and displays them according to Do stuff.
+
+\begin{lstlisting}[language=PHP]
+	<?php if (have_posts()) : while (have_posts()) : the_post(); 
+	if( $post->ID == $do_not_duplicate ) continue;?>
+		<!-- Do stuff... -->
+	<?php endwhile; endif; ?>
+\end{lstlisting}
+
+In English the above code would read:
+
+Get all posts, where a post equals \$do\_not\_duplicate then just do nothing (continue), otherwise display all the other the posts according to Do stuff. Also, update the cache so the tagging and keyword plugins play nice. Recall, \$do\_not\_duplicate variable contains the ID of the post already displayed.
+
+\item The End Result
+
+Here is what the final piece of code looks like without any formatting:
+
+\begin{lstlisting}[language=PHP]
+	<?php $my_query = new WP_Query('category_name=featured&posts_per_page=1');
+	while ($my_query->have_posts()) : $my_query->the_post();
+	$do_not_duplicate = $post->ID;?>
+		<!-- Do stuff... -->
+	<?php endwhile; ?>
+	<!-- Do other stuff... -->
+	<?php if (have_posts()) : while (have_posts()) : the_post(); 
+	if( $post->ID == $do_not_duplicate ) continue; ?>
+	<!-- Do stuff... -->
+	<?php endwhile; endif; ?>
+\end{lstlisting}
+
+The end result would be a page with two lists. The first list contains only one post -- the most recent post from the 'feature' category. The second list will contain X recent posts (as defined in WordPress preferences) except the post that is already shown in the first list. So, once the feature post is replaced with a new one, the previous feature will show up in standard post list section below (depending on how many posts you choose to display and on the post frequency). This technique (or similar) has been used by many in conjunction with knowledge of the Template Hierarchy to create a different look for home.php and index.php. See associated resources at the bottom of this page.
+
+\end{compactenum}
+
+Note:Note for Multiple Posts in the First Category
+
+If posts\_per\_page=2 or more, you will need to alter the code a bit. The variable \$do\_not\_duplicate needs to be changed into an array as opposed to a single value. Otherwise, the first loop will finish and the variable \$do\_not\_duplicate will equal only the id of the latest post. This will result in duplicated posts in the second loop. To fix the problem replace
+
+\begin{lstlisting}[language=PHP]
+<?php $my_query = new WP_Query('category_name=featured&posts_per_page=1');
+ while ($my_query->have_posts()) : $my_query->the_post();
+ $do_not_duplicate = $post->ID;?>
+\end{lstlisting}
+
+with
+
+\begin{lstlisting}[language=PHP]
+<?php $my_query = new WP_Query('category_name=featured&posts_per_page=2');
+  while ($my_query->have_posts()) : $my_query->the_post();
+  $do_not_duplicate[] = $post->ID ?>
+\end{lstlisting}
+
+Note that "posts\_per\_page" can be any number. This changes \$do\_not\_duplicate into an array. Then replace
+
+\begin{lstlisting}[language=PHP]
+<?php if (have_posts()) : while (have_posts()) : the_post(); if( $post->ID ==
+  $do_not_duplicate ) continue; ?>
+\end{lstlisting}
+
+with
+
+\begin{lstlisting}[language=PHP]
+<?php if (have_posts()) : while (have_posts()) : the_post(); 
+ if (in_array($post->ID, $do_not_duplicate)) continue;
+ ?>
+\end{lstlisting}
+
+Where you continue the pattern for whatever posts\_per\_page is set equal to (2 in this case).
+
+Alternatively you can pass the entire \$do\_not\_duplicate array to \$wp\_query and only entries that match your criteria will be returned:
+
+\begin{lstlisting}[language=PHP]
+<?php query_posts(array('post__not_in'=>$do_not_duplicate));
+ if (have_posts()) : while (have_posts()) : the_post();
+ ?>
+\end{lstlisting}
+
+Note that instead a string, the query parameter was an associative array, with post\_not\_in option.
+
+\subsection{Nested Loops}
+
+Nesting loops means that you are running a second loop before finishing the first one. This can be useful to display a post list with a shortcode for example. 
+
+\begin{lstlisting}[language=PHP]
+   $my_query = new WP_Query( "cat=3" );
+   if ( $my_query->have_posts() ) { 
+       while ( $my_query->have_posts() ) { 
+           $my_query->the_post();
+           the_content();
+       }
+   }
+   wp_reset_postdata();
+\end{lstlisting}
+
+
+It is necessary to reset the main loop data after a nested loop so that some global variables hold the correct values again.
+
+
+
+
+
+
+
+
+
+
+\chapter{Theme Design}
+
+\section{Template Customizing}
+
+下面是一个完整的主题含有的文件列表：
+
+\begin{compactitem}
+\item style.css
+\item index.php
+\item home.php - 主页（Home page）
+\item archive.php - 存档模板（Archive pages），用于显示存档页面。
+\item category.php - 类别模板（Category pages），可以用来自定义类别页面。
+\item search.php - 搜索结果模板（Search result pages），用于显示搜索结果。
+\item page.php - 静态模板（Pages），用于显示静态页面，比如About页面等。
+\item single.php - 单一日志模板（Single post view page），用于显示单一日志。
+\item 404.php -  404模板，用于显示404页面。
+\item comments.php - 评论模板，用于显示评论和评论框
+\item comments-popup.php
+\item author.php
+\item date.php
+\item ... ...
+\end{compactitem}
+
+
+%%\begin{figure}[!ht]
+%%\centering
+%%\includegraphics[scale=0.5]{hierarchy.pdf}
+%%\end{figure}
+
+WordPress网站的每个页面是由多个模板文件组成的。以首页为例，index.php通常是由 4 个模板文件组成： header.php，index.php，sidebar.php 和 footer.php。
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.5]{index_wordpress.png}
+\caption{WordPress主题中首页index.php的组成}
+\end{figure}
+
+
+WordPress的每个页面的body又可以分为四个部分，每一部分都可以叫做一个集成模块，其实一个主题就是由不同的模块构成，模块又是由不同的模块构成。对于每一个集成模块中的内容，理论上是可以随意放置的，比如我们可以把header模块中的搜索栏放在sidebar模块中去。
+
+\begin{compactitem}
+\item header - 头部，显示博客的名字与描述，放置导航栏，搜索栏等等。
+\item content - 正文部分，显示贴子的内容，作者，时间，分类，评论，编辑等等。
+\item sidebar - 侧边栏部分。
+\item footer - 底部，这部分只有很少的内容，通常是版权信息。
+\end{compactitem}
+
+
+
+为了区分这四个集成模块，通过 div 标签，可以把这些模块分隔开来，从而对WordPress的每个页面的body部分可以进行如下的划分：
+
+\begin{lstlisting}[language=HTML]
+...
+<body>
+    <div id="header">
+      网站标题
+    </div>
+    <div id="content">
+      网站内容
+    </div>
+    <div id="sidebar">
+      网站搜索栏、分类、存档和友情链接等
+    </div>
+    <div id="footer">
+      网站版权信息
+    </div>
+</body>
+\end{lstlisting}
+
+
+其中，id 是 div 的一个属性，给 id 赋于不同的值，这样就可以区分每一个div代码段。
+
+
+
+
+
+
+
+
+\section{Template Styling}
+
+
+虽然默认类别页面使用category.php显示内容，如果没有category.php文件，类别页面将使用index.php显示内容，这就是WordPress模板系统的层次结构。
+
+
+设计主题时，首先要确定的是主题的总体宽度，而主题的宽度取决于网站绝大多数访问者的屏幕分辨率。需要避免的是使用过大宽度的的主题，如果网站的访客都大多数使用 800px × 600px 的屏幕，因此如果使用 900px 宽的主题将会有100px超出他们的屏幕，显然这是对用户很不友好的。
+
+不同的浏览器对CSS的代码解释是不同的，但是它们都会把\texttt{body\{...\}}等看作是一个标签，并把它里面所有的内容看作属性和值，和处理XHTML时一样。实际上，CSS使用不同的术语，如参数（parameters）、选择器（selector）和属性（property）等。
+
+
+
+在 CSS中，\#是通过id定位页面中的元素，而点号（.）通过class来定位页面中的元素。接下来的\texttt{\{}是开始符，\texttt{\}}是结束符，在\texttt{\{}和\texttt{\}}之间的字符串中，冒号意思是属性值的开始，而分号意思是属性值的结束。
+
+\textbf{设置页面总体宽度}
+
+主题宽度不能超出访客的屏幕，因为这显然是对用户很不友好的。
+
+\begin{lstlisting}[language=CSS]
+html,body{
+   border:0;
+   margin:0;
+   padding:0;
+   ...
+}
+...
+\end{lstlisting}
+
+
+一般情况下，主题中的所有的组成部分（header、container、sidebar和footer）都放在一个称为wrapper的DIV标签中。
+
+\begin{lstlisting}[language=CSS]
+...
+#wrapper{
+  margin:0 auto;
+...
+}
+...
+\end{lstlisting}
+
+
+
+如果能够在尽可能多的浏览器器上和尽可能多的操作系统上测试主题是最好的（Google Chrome、Apple Safari、Opera、Microsoft Internet Explorer\footnote{如果要求自动页面居中，需要把\texttt{body\{...\}}中的\texttt{text-align:left;}改成\texttt{text-align:center;}。虽然设置左边和右边的页边空白为自动是居中，但是这并不是对所有的IE都适用，所以\texttt{body\{text-align:center;\}}是让wrapper DIV居中在旧版本IE的一种解决方案。}等）。
+
+
+\textbf{设置header宽度和布局}
+
+ 把Header浮动到左边并且设置它的宽度。
+ 
+ 
+\begin{lstlisting}[language=CSS]
+...
+#header{
+  float:left;
+  margin:0 auto;
+...
+}
+...
+\end{lstlisting}
+
+\textbf{设置Container宽度和布局}
+
+
+把Container浮动到左边并且设置它的宽度。
+
+
+\begin{lstlisting}[language=CSS]
+...
+#container{
+  float:left;
+  margin:0 auto;
+...
+}
+...
+\end{lstlisting}
+
+\textbf{设置Sidebar宽度和布局}
+
+把Sidebar浮动到左边并且设置它的宽度。
+
+
+\begin{lstlisting}[language=CSS]
+...
+#siderbar{
+  float:left;
+  margin:0 auto;
+...
+}
+...
+\end{lstlisting}
+
+
+\textbf{设置Footer的宽度和布局}
+
+
+把Footer浮动到左边并且设置它的宽度。
+
+
+
+\begin{lstlisting}[language=CSS]
+...
+#footer{
+  clear:both;
+  float:left;
+  margin:0 auto;
+...
+}
+...
+
+\end{lstlisting}
+
+\texttt{clear:both;}使得 Footer 不能和它上面的布局（如Sidebar或者Container）连接起来。
+
+模板文件是WordPress网站的基础，它们就像拼图一样生成要显示的网页。基本上，WordPress的每个页面都是由多个模板文件组成的。
+
+
+
+\section{Designing Headers}
+
+\subsection{Introduction}
+
+They say you can not judge a book by its cover, and yet every day people do. They pick up a book, look at the cover, and then are moved to either put it down, turn it over, or open it up just because of how the cover looks. Websites are also judged by their covers and the first impression often comes from the header.
+
+The header of your site is typically the first thing people see. From this masthead or header art across the top of your page, people make sweeping judgements about what they are about to see and read. The same people who say you can not judge a book by its cover, also say that you only have 30 seconds to make a good impression. In the world of the Internet where the next web page is a click away, you have much less than that.
+
+
+We are going to take you inside the architecture of a WordPress header and offer tips on how to customize it to become your own book cover, enticing people into your site with a good first impression. Then we will offer some tips from some experts on what makes a good website header.
+
+\subsection{Header}
+
+By default, the WordPress header is a simple piece of code. You do not have to get into the code to change the header that comes with whatever WordPress Theme you choose. You set the blog or website title and description in the Administration > Settings > General panel, and WordPress does the rest.
+
+In its simplest form, the WordPress Classic Theme features the header code like this in the wp-content/themes/classic/header.php template file:
+
+\begin{lstlisting}[language=HTML]
+<h1 id="header">
+  <a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a>
+</h1>
+\end{lstlisting}
+
+The header is set in an h1 HTML tag and features one template tag used with two different options or parameters. You can learn more about these parameters in the documentation for bloginfo(). Basically, the first one displays the URL of the website in a link, and the second one displays the name of the blog or website as set in the Administration > Settings > General panel. When the user moves the mouse over the header title, the header can be clicked to return back to the main or front page of the site as set in the Administration > Settings > General panel.
+
+The WordPress Default Theme features an image in the background and presents the header like this in wp-content/themes/default/header.php:
+
+\begin{lstlisting}[language=HTML]
+<div id="header">
+  <div id="headerimg">
+    <h1><a href="<?php echo get_option('home');?>"><?php bloginfo('name');?></a></h1>
+    <div class="description"><?php bloginfo('description');?></div>
+  </div>
+</div>
+\end{lstlisting}
+
+Again, the template tag featuring the name of the blog or website is in a link, but this shows another usage similar to the URL request above. It gets the same information, just in a different way. It also adds the description of the site from the Administration > Settings > General panel.
+
+Basically, these two header examples do the same thing in different ways. They provide information in the header, with the potential for an image, and make the header title clickable to help navigation on the site. It is just a matter of how much information you want in your header, and how that information is displayed.
+
+Basically, these two header examples do the same thing in different ways. They provide information in the header, with the potential for an image, and make the header title clickable to help navigation on the site. It is just a matter of how much information you want in your header, and how that information is displayed.
+
+Using the first example from the Classic Theme, an image can still be used in the background, set within the style sheet in the h1 selector, but the second one gives more control to the use of an image in the header by giving it its own division. How these look are totally controlled by the style sheet.
+
+
+\subsection{Styling the Header}
+
+As listed in the two above examples, the styles for the header are contained within the h1, header, headerimg, and description CSS selectors. These are all found within the style.css, though may be found in the styles in the header.php of the Theme you are using. You will have to check both places.
+
+In the Classic Theme, the CSS for the header are found in one selector, the \#header.
+
+\begin{lstlisting}[language=CSS]
+#header{
+    background: #ffffff;
+    border-bottom: double 3px #aba;
+    border-left: solid 1px #9a9;
+    border-right: solid 1px #565;
+    border-top: solid 1px #9a9;
+    font: italic normal 230% 'Times New Roman', Times, serif;
+    letter-spacing:0.2em;
+    margin: 0;
+    padding:15px 10px 15px 60px;
+}
+\end{lstlisting}
+
+The background color is set to a white shade and there is a border all the way around the header which changes colors creating a recessed, shadow effect. The Times font is set with a size of 230\% with a wider than normal letter spacing. The padding on the left side indents the text in from the left.
+
+All of these can be easily changed, giving the border a thicker width and making it all the same color, changing the background color, the font size and style, the letter spacing, and more by modifying the information in each style attribute.
+
+The same is true of the Default WordPress Theme header, except there are more styles to think about and they are found within the header.php's "head" tag and the style.css, though once you have your styles set, you can move the information into your style sheet.
+
+The styles that control the header's look are found within the h1, header, headerimg, and description CSS selectors. Just like the Classic Theme, find these references and make your modifications there to change the look.
+
+Changing the header image of the Default WordPress Theme has been simplified with the introduction of a utility called Kubrickr. It simply asks you to supply a new image file name for the header and then switches it for you, so you do not have to dig into the code. If all you want to change is the header image, this is an extremely useful and easy tool.
+
+If you do want to get your hands into the code, dig into your header styles and make the changes. Below is a simple tutorial on changing just the header image manually.
+
+\subsection{Changing the Header Image}
+
+
+There are many different header images and header art available for you to use to change the image in the header. The styles for the header image for the Default or Kubrick WordPress Theme, and any Theme based upon that Theme, are more complicated to change than those for the Classic Theme. The styles are found within the styles in the header.php "head" section, as well as in the styles.css. To change only the header image reference, open the header.php template file and look for the styles like this:
+
+\begin{lstlisting}[language=PHP]
+#header {
+  background: url("<?php bloginfo(stylesheet_directory); ?>/images/wc_header.jpg")
+  no-repeat bottom center;
+}
+#headerimg {
+  margin: 7px 9px 0;
+  height: 192px;
+  width: 740px;
+}
+\end{lstlisting}
+
+To change the image file, replace the "kubrickheader.jpg" with the name of the new graphic image you have uploaded to your site to replace it. If it is in a different directory, change that by replacing the bloginfo() tag with the specific address of the graphic's location.
+
+
+
+
+
+\section{Designing Headings}
+
+
+\begin{shaded}
+\begin{center}A Heading isn't a Header\end{center}
+\end{shaded}
+
+首先，为了处理大部分页边空白和填充，需要Reset CSS。
+
+\begin{lstlisting}[language=CSS]
+...
+html,body,div,span,applet,object,iframe,
+h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,
+abbr,acronym,address,big,cite,code,del,
+dfn,em,font,ins,kbd,q,s,samp,small,strike,
+strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,
+form,label,legend,table,caption,tbody,tfoot,
+thead,tr,th,td{
+ border:0;
+ margin:0;
+ outline:0;
+ vertical-align:baseline;
+ font-family:inherit;
+ font-size:100%;
+ font-weight:inherit;
+}
+\end{lstlisting}
+
+接下来我们可以增加空白和填充到需要的地方。
+
+
+
+
+
+
+
+
+
+
+
+\section{Post Meta Data Section}
+
+The post meta data is the ``administrative" information you provide to viewers about each post. This information usually includes the author of the post, when it was written (or posted), and how the author categorized that particular post. This lesson will show you some different ways to change your Theme design to display these important pieces of information in the manner you desire.
+
+
+
+
+
+
+
+
+
+
+\section{Page Template}
+
+
+
+page.php\cite{wp_page}模板文件是用来定制化特殊静态静态页面的。
+
+第一，在 page.php 中的\texttt{<?php the\_content(); ?>}下输入以下代码：
+
+\begin{lstlisting}[language=PHP]
+<?php link_pages('<p><code>Pages:</strong>','</p>','number'); ?>
+\end{lstlisting}
+
+和
+
+\begin{lstlisting}[language=PHP]
+<?php edit_post_link('Edit','<p>','</p>'); ?>
+\end{lstlisting}
+
+第二，从 page.php 中移除 postmetadata 代码，结果如下：
+
+
+\begin{lstlisting}[language=PHP]
+<div class="entry">
+  <?php the_content(); ?>
+  <?php link_pages('<p><strong>Pages:</strong>','</p>','number'); ?>
+  <?php edit_post_link('Edit','<p>','</p>'); ?>
+</div>
+\end{lstlisting}
+
+
+第三，在 page.php 中移除 posts\_nav\_link() 或者导航模块。
+
+上述示例代码中，第一行代码是用于显示页面的分页链接。在需要把一个非常长的页面分成几个页面的时候，这是非常有用的。
+
+第二行代码是用于显示可以用来编辑静态页面的编辑链接。通常页面是没有分类，并且通常不想给他们显示创建时间，所以需要去移除 postmetadata。接下来，移除posts\_nav\_link() 代码因为静态页面不会显示后一页和前一页的链接。
+
+Pages （和日志不同）是没有分类的，它们同样没有后一页和前一页的链接。
+
+\section{Single Template}
+
+点击一个日志的标题去阅读日志其余部分就会带你到单篇日志查看模式。single.php 模板就是用于处理查看单篇日志时的外观。
+
+第一，在 single.php 中的\texttt{<?php the\_content() ?>}下输入：
+
+
+\begin{lstlisting}[language=PHP]
+<?php link_pages('<p><strong>Pages:</strong>','</p>','number'); ?>
+\end{lstlisting}
+
+这是用于编码页面的分页链接的代码，同样也可以把日志分成多篇子日志。
+
+
+第二，在 postmetadata 区域，移除\texttt{<?php comments\_popup\_link(); ?>}函数和前面的\texttt{<br />}标签，但不要移除整个 postmetadata。
+
+移除了留言链接函数是因为在单篇日志查看模式下，留言链接函数是不起作用的，所以要在 singel.php 文件中移除它，此时只有管理员可见的编辑链接，在 BR 标签的左边。
+
+第三，用以下代码取代\texttt{<?php posts\_nav\_link(); ?>}。
+
+
+\begin{lstlisting}[language=PHP]
+<?php previous_post_link('? %link') ?> <?php next_post_link('%link ?') ?>
+\end{lstlisting}
+
+在存档、分类和搜索页面，我们使用posts\_nav\_link() 函数去调用后一页和前一页的链接。对于查看单一日志的页面，它是没有后一页和前一页链接的，我们可以使用 previous\_post\_link()和next\_post\_link()函数去调用前一篇日志和后一篇日志的链接。
+
+single.php不会显示留言链接（被 comments\_popup\_link() 函数调用）并且它不用 posts\_nav\_link() 去调用导航链接。
+
+
+\section{Comments Template}
+
+以前，没有快速的方式在 comments.php 建立评论模板，大部分的 WordPress 设计者使用来自 WordPress 默认主题（Kubrick）的默认评论模板，可以修改默认的评论模板去适合自己的需求。
+
+
+
+在 single.php 文件中，entry DIV 的下面，输入以下代码：
+
+\begin{lstlisting}[language=PHP]
+<div class="entry">
+...
+</div>
+<div class="comments-template">
+<?php comments_template(); ?>
+</div>
+\end{lstlisting}
+
+其中，comments\_template()函数是用来从comments.php文件调用评论模板，然后comments.php文件就会根据它的模板（或者代码）去显示评论列表，列表中的每个条目是一条评论，接下来comment\_text()函数可以用来调用每条评论。
+
+如果想让访客可以在静态页面也可以留言，可以把comments\_template()函数用到 page.php 文件。
+
+评论模板从根本上说是一个有序列表\footnote{无序列表是以圆点列表组织的，有序列表则是以数字列表组织的（每个条目都有一个数字，从1开始）。}，不是无序的，尽管它们基本上同样方式工作。在 single.php 文件中，使用comments-template DIV 围住comments\_template()，于是评论模板就在一个 DIV 标签中的一个有序列表中。 
+
+另外，当日志是用密码保护时，评论同样是密码保护的：
+
+\begin{lstlisting}[language=PHP]
+<h2><?php _e('Password Protected'); ?></h2>
+<p><? php _e('Enter the password to view comments.'); ?></p>
+\end{lstlisting}
+
+
+这里，留言模板有一个<h2>子标题显示Password Protected，在默认的留言模板中是没有的。当创建自定义的主题和评论模板时，下面是需要验证的页面：
+
+
+\begin{compactitem}
+\item 主页 - Home page
+
+\item 存档页面 - Archive pages
+
+\item 类别页面 - Category pages （如果自定义了类别页面）
+
+\item 搜索结果页面 - Search result pages
+
+\item 静态页面 - Pages （如：About）
+
+\item 单一日志页面 - Single post view page
+
+\item 单一日志没有留言 - Single post with no comments
+
+\item 单一日志有留言 - Single post with comments
+
+\item 单一日志含有必须登录信息 - Single post with must login message
+
+\item 单一日志没有必须登录信息 - Single post with no login required message
+
+\item 密码保护的单一日志并有留言 - Password protected single post with comments
+
+\end{compactitem}
+
+\subsection{Thread Comments}
+
+
+WordPress 2.7 之后支持了 Thread Comments（嵌套留言和回复），这是WordPress 从 2.7 版本新增的最大一个功能。
+
+Thread Comments就是可以回复留言并且嵌套显示，这样在留言的时候更加友好，可以针对日志内容留言，也可以针对某条留言回复，并且可以直接在留言中讨论而不影响其他用户，所以 WordPress 主题实现 Thread Comments 是非常必要的。
+
+由于 WordPress 很早就在 wp\_comments 数据表中预留了 comment\_parent 字段，在 2.7 版本之前的实现 Thread Comments 功能的插件都是通过使用这个字段实现的，WordPress 2.7 之后自带的 Thread Comments 也不例外，也是通过这个字段实现，所以可以完全兼容之前的 Thread comments 插件。但是要使用 WordPress 2.7 自带的 Thread Comments，需要修改主题的 comments.php 主题文件。
+
+
+
+
+\bibliographystyle{plainnat}
+\bibliography{WPN}
+\clearpage
+
