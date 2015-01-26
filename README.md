@@ -1,4 +1,4 @@
-WordPress Content Management System
+WordPress Notes
 ==============
 
 wordpress notes
